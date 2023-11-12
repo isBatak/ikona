@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
-    "rootDir": "src",
+    "rootDir": ".",
     "outDir": "dist",
-    "module": "commonjs",
-    "target": "es6",
+    "module": "ESNext",
+    "target": "ES2021",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
     "esModuleInterop": true
   }
 }

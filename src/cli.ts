@@ -1,37 +1,23 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander'
+import { name, version, description } from '../package.json'
 
-import { orderPizza } from './index'
+import { init } from './index'
 
 const program = new Command()
 
 program
-  .name('pizza')
-  .description('Order a pizza')
-  .version('0.1.0')
-  .option('-p, --peppers', 'Add peppers')
-  .option('-P, --pineapple', 'Add pineapple')
-  .option('-b, --bbq-sauce', 'Add bbq sauce')
-  .option(
-    '-c, --cheese [type]',
-    'Add the specified type of cheese [marble]',
-    'marble'
-  )
+  .name(name)
+  .version(version)
+  .description(description)
+  .option('-v, --verbose', 'Verbose output')
   .parse(process.argv)
 
-interface Options {
-  peppers: boolean
-  pineapple: boolean
-  bbqSauce: boolean
-  cheese: string
+export interface Options {
+  verbose: boolean
 }
 
 const options = program.opts<Options>()
 
-orderPizza({
-  peppers: options.peppers,
-  pineapple: options.pineapple,
-  bbqSauce: options.bbqSauce,
-  cheeseType: options.cheese,
-}).then((result) => console.log(result.message))
+init(options)

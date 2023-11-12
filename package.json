@@ -15,7 +15,10 @@
   ],
   "license": "MIT",
   "main": "./dist/index.js",
-  "bin": "./dist/cli.js",
+  "bin": {
+    "fanta": "./dist/cli.js"
+  },
+  "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
     "!dist/**/*.test.js"
@@ -23,7 +26,8 @@
   "scripts": {
     "dev": "ts-node ./src/cli.ts",
     "clean": "rimraf ./dist/ ./exec/",
-    "build": "pnpm run clean && tsc",
+    "build": "tsup",
+    "watch": "tsup --watch",
     "test": "node --require ts-node/register --test ./**/*.test.ts",
     "bundle": "pnpm run build && pkg . --out-dir ./exec/",
     "prepare": "husky install"
@@ -39,9 +43,13 @@
     "prettier": "3.0.3",
     "rimraf": "^5.0.5",
     "ts-node": "^10.9.1",
+    "tsup": "^7.2.0",
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "commander": "^11.1.0"
+    "commander": "^11.1.0",
+    "fs-extra": "^11.1.1",
+    "glob": "^10.3.10",
+    "node-html-parser": "^6.1.11"
   }
 }

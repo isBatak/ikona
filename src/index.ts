@@ -1,19 +1,22 @@
-export interface Toppings {
-  peppers: boolean
-  pineapple: boolean
-  bbqSauce: boolean
-  cheeseType: string
+import { Options } from './cli'
+import { resolveConfigFile } from './utils/config'
+
+const defaultOptions: Options = {
+  verbose: false,
 }
 
-export async function orderPizza(
-  toppings: Toppings
-): Promise<{ message: string }> {
-  let message = 'you ordered a pizza with:\n'
-  if (toppings.peppers) message += '  - peppers\n'
-  if (toppings.pineapple) message += '  - pineapple\n'
-  if (toppings.bbqSauce) message += '  - bbq\n'
-  message += `  - ${toppings.cheeseType} cheese`
+export function defineConfig(options: Options): Options {
   return {
-    message,
+    ...defaultOptions,
+    ...options,
   }
+}
+
+export async function init(options: Options) {
+  const isVerbose = options.verbose
+
+  const config = await resolveConfigFile()
+
+  console.log(config)
+  console.log(isVerbose)
 }
