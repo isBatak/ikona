@@ -1,27 +1,24 @@
-# typescript-cli-starter
+# Fanta
 
-A Typescript CLI starter template.
+An SVG sprite and illustration asset generator called Fanta because Sprite is too mainstream.
 
-![GitHub package.json dynamic](https://img.shields.io/github/package-json/keywords/isBatak/typescript-cli-starter.svg?style=flat-square)
+![GitHub package.json dynamic](https://img.shields.io/github/package-json/keywords/isBatak/fanta.svg?style=flat-square)
 
-![GitHub](https://img.shields.io/github/license/isBatak/typescript-cli-starter.svg?style=flat-square)
-![GitHub package.json version](https://img.shields.io/github/package-json/v/isBatak/typescript-cli-starter.svg?style=flat-square)
-![GitHub top language](https://img.shields.io/github/languages/top/isBatak/typescript-cli-starter.svg?style=flat-square)
+![GitHub](https://img.shields.io/github/license/isBatak/fanta.svg?style=flat-square)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/isBatak/fanta.svg?style=flat-square)
+![GitHub top language](https://img.shields.io/github/languages/top/isBatak/fanta.svg?style=flat-square)
 
-![GitHub last commit](https://img.shields.io/github/last-commit/isBatak/typescript-cli-starter.svg?style=flat-square)
+![GitHub last commit](https://img.shields.io/github/last-commit/isBatak/fanta.svg?style=flat-square)
 
-Includes:
+## Installation
 
-- [TypeScript](https://www.typescriptlang.org/), for writing good code
-- [Node Test Runner](https://nodejs.org/api/test.html), for writing good tests
-- [Commander](https://www.npmjs.com/package/commander), for building CLI applications
-- [Pkg](https://www.npmjs.com/package/pkg), for building cross-platform native executables
-- [Prettier](https://prettier.io/), for formatting your code
-- [ESLint](https://eslint.org/), for linting your code
-
-Your application will be installable from `npm` or by sharing your native executables.
+todo
 
 ## Usage
+
+todo
+
+## Contributing
 
 ### **dev**
 
