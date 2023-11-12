@@ -1,0 +1,22 @@
+# Logs
+logs
+*.log
+
+# Dependency directories
+node_modules/
+
+# Output of 'npm pack'
+*.tgz
+
+# Environment variables
+.env
+
+# Compiled output
+dist/
+build/
+out/
+exec/
+
+# Miscellaneous
+.DS_Store
+Thumbs.db

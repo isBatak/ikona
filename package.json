@@ -1,0 +1,44 @@
+{
+  "name": "typescript-cli-starter",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A Typescript CLI starter template.",
+  "author": "Ivica Batinić <ivicabatinic123@gmail.com",
+  "keywords": [
+    "typescript",
+    "cli",
+    "starter"
+  ],
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "bin": "./dist/cli.js",
+  "files": [
+    "dist/**/*",
+    "!dist/**/*.test.js"
+  ],
+  "scripts": {
+    "dev": "ts-node ./src/cli.ts",
+    "clean": "rimraf ./dist/ ./exec/",
+    "build": "pnpm run clean && tsc",
+    "test": "node --require ts-node/register --test ./**/*.test.ts",
+    "bundle": "pnpm run build && pkg . --out-dir ./exec/",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@types/node": "^20.9.0",
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/parser": "^6.10.0",
+    "eslint": "^8.53.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.1.0",
+    "pkg": "^5.8.1",
+    "prettier": "3.0.3",
+    "rimraf": "^5.0.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "commander": "^11.1.0"
+  }
+}
