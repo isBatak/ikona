@@ -1,0 +1,74 @@
+{
+  "name": "@fanta/cli",
+  "version": "0.1.0",
+  "description": "A Typescript CLI starter template.",
+  "author": "Ivica Batinić <ivicabatinic123@gmail.com",
+  "keywords": [
+    "typescript",
+    "cli",
+    "SVG sprite",
+    "illustration",
+    "assets",
+    "generator"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "fanta": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist/**/*",
+    "*.d.ts",
+    "!dist/**/*.test.js"
+  ],
+  "scripts": {
+    "clean": "rimraf ./dist/ ./exec/",
+    "build": "tsup src --format=esm,cjs --dts --no-splitting --shims",
+    "build-fast": "tsup src --format=esm,cjs --no-dts --no-splitting --shims",
+    "dev": "pnpm build-fast --watch src",
+    "test": "node --require ts-node/register --test ./**/*.test.ts",
+    "bundle": "pnpm run build && pkg . --out-dir ./exec/"
+  },
+  "devDependencies": {
+    "@types/node": "^20.9.0",
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/parser": "^6.10.0",
+    "eslint": "^8.53.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.1.0",
+    "pkg": "^5.8.1",
+    "prettier": "3.0.3",
+    "rimraf": "^5.0.5",
+    "ts-node": "^10.9.1",
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "bundle-n-require": "^1.0.1",
+    "commander": "^11.1.0",
+    "escalade": "^3.1.1",
+    "fs-extra": "^11.1.1",
+    "glob": "^10.3.10",
+    "merge-anything": "^5.1.7",
+    "node-html-parser": "^6.1.11"
+  }
+}

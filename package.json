@@ -1,9 +1,8 @@
 {
-  "name": "@isbatak/fanta",
+  "name": "fanta",
+  "version": "0.0.1",
   "private": true,
-  "version": "1.0.0",
-  "type": "module",
-  "description": "A Typescript CLI starter template.",
+  "description": "The repo of fanta",
   "author": "Ivica Batinić <ivicabatinic123@gmail.com",
   "keywords": [
     "typescript",
@@ -14,23 +13,14 @@
     "generator"
   ],
   "license": "MIT",
-  "main": "./dist/index.js",
-  "bin": {
-    "fanta": "./dist/cli.js"
-  },
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist/**/*",
-    "!dist/**/*.test.js"
-  ],
   "scripts": {
-    "dev": "ts-node ./src/cli.ts",
-    "clean": "rimraf ./dist/ ./exec/",
-    "build": "tsup",
-    "watch": "tsup --watch",
-    "test": "node --require ts-node/register --test ./**/*.test.ts",
-    "bundle": "pnpm run build && pkg . --out-dir ./exec/",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "dev": "pnpm --parallel --filter=./packages/** dev",
+    "build-fast": "pnpm -r --parallel --filter=./packages/** build-fast",
+    "build": "pnpm -r --filter=./packages/** build",
+    "prettier": "prettier --check packages",
+    "prettier-fix": "prettier --write packages",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@types/node": "^20.9.0",
@@ -47,7 +37,10 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "bundle-n-require": "^1.0.1",
     "commander": "^11.1.0",
+    "escalade": "^3.1.1",
     "fs-extra": "^11.1.1",
     "glob": "^10.3.10",
     "node-html-parser": "^6.1.11"
