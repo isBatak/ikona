@@ -1,4 +1,5 @@
 import { type Config } from './cli';
+import { generateSprite } from './icons/build';
 import { generateIllustrationTypes } from './illustrations/types';
 import { resolveConfigFile } from './utils/config';
 import { mergeAndConcat } from 'merge-anything';
@@ -14,6 +15,7 @@ export async function init(cliConfig: Config) {
   // const isVerbose = config.verbose;
 
   await Promise.all([
-    generateIllustrationTypes(config)
+    generateSprite(config),
+    generateIllustrationTypes(config),
   ]);
 }

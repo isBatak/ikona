@@ -9,9 +9,15 @@ export function validatePath(
 	}
 }
 
-export async function writeIfChanged(filepath: string, newContent: string) {
-	const currentContent = await fsExtra.readFile(filepath, 'utf8').catch(() => '');
+export async function writeIfChanged(filepath: string, newContent: string, hash?: string) {
+	let _filepath = filepath;
+
+	if (hash) {
+		_filepath = filepath.replace(/\.svg$/, `.${hash}.svg`);
+	}
+
+	const currentContent = await fsExtra.readFile(_filepath, 'utf8').catch(() => '');
 	if (currentContent === newContent) return false;
-	await fsExtra.writeFile(filepath, newContent, 'utf8');
+	await fsExtra.writeFile(_filepath, newContent, 'utf8');
 	return true;
 }

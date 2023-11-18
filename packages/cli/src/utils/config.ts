@@ -2,6 +2,10 @@ import { bundleNRequire } from 'bundle-n-require';
 import findUp from 'escalade/sync';
 import { resolve } from 'path';
 
+export const defaultConfig = {
+  outDir: '.fanta',
+}
+
 const configs = ['.ts', '.js', '.mts', '.mjs', '.cts', '.cjs'];
 const configRegex = new RegExp(`fanta.config(${configs.join('|')})$`);
 const isConfig = (file: string) => configRegex.test(file);

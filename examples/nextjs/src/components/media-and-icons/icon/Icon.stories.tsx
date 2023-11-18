@@ -1,7 +1,7 @@
 import { Grid, GridItem, Text, useClipboard, useToast } from '@chakra-ui/react';
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Icon } from '@ui/components/atoms/icon/Icon';
+import { Icon } from './Icon';
 
 const meta = {
 	title: 'atoms/Icon',

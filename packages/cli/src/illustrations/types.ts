@@ -4,6 +4,7 @@ import * as path from 'node:path';
 
 import { writeIfChanged } from '../utils/validations';
 import type { Config } from '../cli';
+import { defaultConfig } from '../utils/config';
 
 
 const command = 'yarn workspace web run gen:illustrations:types';
@@ -42,15 +43,15 @@ export type IllustrationPath =
 }
 
 export async function generateIllustrationTypes(config: Config) {
-    const { illustrations } = config;
-    const { inputDir, typeDir } = illustrations;
+    const { outDir = defaultConfig.outDir, illustrations } = config;
+    const { inputDir } = illustrations;
     
     const cwd = process.cwd();
 
     const inputDirRelative = path.relative(cwd, inputDir);
-    const typeDirRelative = path.join(cwd, typeDir);
+    const typeDirRelative = path.join(cwd, outDir, 'types');
 
-    await fsExtra.ensureDir(typeDir);
+    await fsExtra.ensureDir(typeDirRelative);
 
     const files = glob
         .sync('**/*.{svg,png,jpg,jpeg}', {

@@ -3,26 +3,46 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "prepare": "fanta",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "fanta": "fanta"
+    "fanta": "fanta",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "framer-motion": "^10.16.5",
     "next": "14.0.3",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.23.3",
+    "@babel/preset-react": "^7.23.3",
+    "@babel/preset-typescript": "^7.23.3",
     "@fanta/cli": "workspace:*",
+    "@storybook/addon-essentials": "^7.5.3",
+    "@storybook/addon-interactions": "^7.5.3",
+    "@storybook/addon-links": "^7.5.3",
+    "@storybook/addon-onboarding": "^1.0.8",
+    "@storybook/blocks": "^7.5.3",
+    "@storybook/react": "^7.5.3",
+    "@storybook/react-webpack5": "^7.5.3",
+    "@storybook/testing-library": "^0.2.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.0.2",
+    "eslint-plugin-storybook": "^0.6.15",
     "postcss": "^8",
+    "storybook": "^7.5.3",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
   }

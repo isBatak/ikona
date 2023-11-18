@@ -12,10 +12,12 @@ program
   .version(version)
   .description(description)
   .option('-v, --verbose', 'Verbose output')
+  .option('-o, --out-dir <path>', 'Output directory')
   .parse(process.argv);
 
 export interface Config {
   verbose?: boolean;
+  outDir?: string;
   icons: {
     inputDir: string;
     outputDir: string;
