@@ -15,7 +15,18 @@ program
   .parse(process.argv);
 
 export interface Config {
-  verbose: boolean;
+  verbose?: boolean;
+  icons: {
+    inputDir: string;
+    outputDir: string;
+    componentsOutputDir: string;
+    storyFile: string;
+  },
+  illustrations: {
+    inputDir: string;
+    typeDir: string;
+    storyFile: string;
+  },
 }
 
 const options = program.opts<Config>();

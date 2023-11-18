@@ -1,7 +1,7 @@
 {
   "name": "@fanta/cli",
   "version": "0.1.0",
-  "description": "A Typescript CLI starter template.",
+  "description": "Fanta CLI",
   "author": "Ivica Batinić <ivicabatinic123@gmail.com",
   "keywords": [
     "typescript",
