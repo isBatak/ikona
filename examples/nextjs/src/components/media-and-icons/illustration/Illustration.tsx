@@ -4,7 +4,6 @@ import type { IllustrationPath } from '../../../../.ikona/types/illustration-pat
 
 export interface IllustrationProps extends Omit<HTMLChakraProps<'img'>, 'src'> {
 	src: IllustrationPath;
-	svg?: boolean;
 }
 
 export const Illustration = forwardRef<IllustrationProps, 'img'>((props, ref) => (
