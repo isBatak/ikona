@@ -1,6 +1,6 @@
 # Ikona
 
-An SVG sprite and illustration asset generator called Ikona because Sprite is too mainstream.
+An SVG sprite and illustration asset generator called /ikɔna/.
 
 ![GitHub package.json dynamic](https://img.shields.io/github/package-json/keywords/isBatak/ikona.svg?style=flat-square)
 
