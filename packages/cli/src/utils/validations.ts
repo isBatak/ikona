@@ -1,4 +1,5 @@
 import fsExtra from 'fs-extra';
+import { join, extname } from 'node:path';
 
 export function validatePath(
 	path: string | undefined,
@@ -7,6 +8,31 @@ export function validatePath(
 	if (!path) {
 		throw new Error(errorMessage);
 	}
+}
+
+export function clear(folderPath: string) {
+	fsExtra.readdir(folderPath, (err, files) => {
+		if (err) {
+			console.error('Error reading folder:', err);
+			return;
+		}
+
+		const svgFiles = files.filter(
+			(file) => extname(file).toLowerCase() === '.svg' && file.startsWith('sprite')
+		);
+
+		svgFiles.forEach((svgFile) => {
+			const filePath = join(folderPath, svgFile);
+
+			fsExtra.unlink(filePath, (err) => {
+				if (err) {
+					console.error(`Error removing file ${filePath}:`, err);
+				} else {
+					console.log(`Removed file: ${filePath}`);
+				}
+			});
+		});
+	});
 }
 
 export async function writeIfChanged(filepath: string, newContent: string, hash?: string) {
@@ -18,6 +44,12 @@ export async function writeIfChanged(filepath: string, newContent: string, hash?
 
 	const currentContent = await fsExtra.readFile(_filepath, 'utf8').catch(() => '');
 	if (currentContent === newContent) return false;
+
+	if (hash) {
+		const folder = filepath.replace(/sprite\.svg$/, ``);
+		clear(folder);
+	}
+
 	await fsExtra.writeFile(_filepath, newContent, 'utf8');
 	return true;
 }

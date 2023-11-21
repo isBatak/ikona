@@ -43,25 +43,37 @@ async function generateIconFiles({ files, inputDir, outputDir, spriteOutputDir }
 
 	console.log(`Saved to ${path.relative(process.cwd(), spriteFilepath)}`);
 
+	/** Types export */
 	const stringifiedIconNames = iconNames.map((name) => JSON.stringify(name));
-
 	const typeOutputContent = `
 export type IconName =
 \t| ${stringifiedIconNames.join('\n\t| ').replace(/"/g, "'")};
 `;
-
 	const typesChanged = await writeIfChanged(typeOutputFilepath, typeOutputContent);
+	console.log(`Types saved to ${path.relative(process.cwd(), typeOutputFilepath)}`);
 
-	console.log(`Manifest saved to ${path.relative(process.cwd(), typeOutputFilepath)}`);
+	/** Export icon names */
+	const iconsOutputFilepath = path.join(outputDir, 'icons.ts');
+	const iconsOutputContent = `import { IconName } from './types/icon-name';
 
+export const icons = [
+\t${stringifiedIconNames.join(',\n\t')},
+] satisfies Array<IconName>;
+`;
+	const iconsChanged = await writeIfChanged(iconsOutputFilepath, iconsOutputContent);
+	console.log(`Icons saved to ${path.relative(process.cwd(), iconsOutputFilepath)}`);
 
-	const svgUseComponent = await writeIfChanged(
-		path.join(outputDir, 'hash.ts'),
+	/** Hash file export */
+	const hashOutputFilepath = path.join(outputDir, 'hash.ts');
+	const hashFile = await writeIfChanged(
+		hashOutputFilepath,
 `
 export const hash = '${hash}';\n`
 	);
+	console.log(`Hash file saved to ${path.relative(process.cwd(), hashOutputFilepath)}`);
 
-	if (spriteChanged || typesChanged || svgUseComponent) {
+	/** Log */
+	if (spriteChanged || typesChanged || hashFile || iconsChanged) {
 		console.log(`Generated ${files.length} icons`);
 	}
 }
