@@ -3,11 +3,11 @@ import findUp from 'escalade/sync';
 import { resolve } from 'path';
 
 export const defaultConfig = {
-  outDir: '.fanta',
+  outDir: '.ikona',
 }
 
 const configs = ['.ts', '.js', '.mts', '.mjs', '.cts', '.cjs'];
-const configRegex = new RegExp(`fanta.config(${configs.join('|')})$`);
+const configRegex = new RegExp(`ikona.config(${configs.join('|')})$`);
 const isConfig = (file: string) => configRegex.test(file);
 
 export function findConfigFile({ cwd, file }: { cwd: string; file?: string }) {

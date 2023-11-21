@@ -1,4 +1,4 @@
-import { defineConfig } from '@fanta/cli';
+import { defineConfig } from '@ikona/cli';
 
 export default defineConfig({
   verbose: false,

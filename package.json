@@ -1,8 +1,8 @@
 {
-  "name": "fanta",
+  "name": "ikona",
   "version": "0.0.1",
   "private": true,
-  "description": "The repo of fanta",
+  "description": "The repo of ikona, a CLI tool for generating SVG sprites from a directory of SVG files and more.",
   "author": "Ivica Batinić <ivicabatinic123@gmail.com",
   "keywords": [
     "typescript",

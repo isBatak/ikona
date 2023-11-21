@@ -1,7 +1,7 @@
 {
-  "name": "@fanta/cli",
+  "name": "@ikona/cli",
   "version": "0.1.0",
-  "description": "Fanta CLI",
+  "description": "Ikona CLI",
   "author": "Ivica Batinić <ivicabatinic123@gmail.com",
   "keywords": [
     "typescript",
@@ -16,7 +16,7 @@
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "bin": {
-    "fanta": "./dist/cli.js"
+    "ikona": "./dist/cli.js"
   },
   "exports": {
     ".": {

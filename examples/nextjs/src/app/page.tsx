@@ -1,9 +1,9 @@
 'use client'
 import { Grid, GridItem, Text, useClipboard, useToast } from "@chakra-ui/react";
 
-import { icons } from "../../.fanta/icons";
+import { icons } from "../../.ikona/icons";
 import { Icon } from "@/components/media-and-icons/icon/Icon";
-import { IconName } from "../../.fanta/types/icon-name";
+import { IconName } from "../../.ikona/types/icon-name";
 
 const IconPreview = ({ name }: { name: IconName } ) => {
   const toast = useToast();

@@ -100,7 +100,7 @@ importers:
       '@babel/preset-typescript':
         specifier: ^7.23.3
         version: 7.23.3(@babel/core@7.23.3)
-      '@fanta/cli':
+      '@ikona/cli':
         specifier: workspace:*
         version: link:../../packages/cli
       '@types/node':

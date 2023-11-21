@@ -1,6 +1,6 @@
 import { type HTMLChakraProps, chakra, forwardRef } from '@chakra-ui/react';
 
-import type { IllustrationPath } from '../../../../.fanta/types/illustration-path';
+import type { IllustrationPath } from '../../../../.ikona/types/illustration-path';
 
 export interface IllustrationProps extends Omit<HTMLChakraProps<'img'>, 'src'> {
 	src: IllustrationPath;

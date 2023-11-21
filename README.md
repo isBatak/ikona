@@ -1,14 +1,14 @@
-# Fanta
+# Ikona
 
-An SVG sprite and illustration asset generator called Fanta because Sprite is too mainstream.
+An SVG sprite and illustration asset generator called Ikona because Sprite is too mainstream.
 
-![GitHub package.json dynamic](https://img.shields.io/github/package-json/keywords/isBatak/fanta.svg?style=flat-square)
+![GitHub package.json dynamic](https://img.shields.io/github/package-json/keywords/isBatak/ikona.svg?style=flat-square)
 
-![GitHub](https://img.shields.io/github/license/isBatak/fanta.svg?style=flat-square)
-![GitHub package.json version](https://img.shields.io/github/package-json/v/isBatak/fanta.svg?style=flat-square)
-![GitHub top language](https://img.shields.io/github/languages/top/isBatak/fanta.svg?style=flat-square)
+![GitHub](https://img.shields.io/github/license/isBatak/ikona.svg?style=flat-square)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/isBatak/ikona.svg?style=flat-square)
+![GitHub top language](https://img.shields.io/github/languages/top/isBatak/ikona.svg?style=flat-square)
 
-![GitHub last commit](https://img.shields.io/github/last-commit/isBatak/fanta.svg?style=flat-square)
+![GitHub last commit](https://img.shields.io/github/last-commit/isBatak/ikona.svg?style=flat-square)
 
 ## Installation
 
