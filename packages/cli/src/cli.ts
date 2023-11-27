@@ -13,11 +13,13 @@ program
   .description(description)
   .option('-v, --verbose', 'Verbose output')
   .option('-o, --out-dir <path>', 'Output directory')
+  .option('--optimize', 'Optimize SVGs')
   .parse(process.argv);
 
 export interface Config {
   verbose?: boolean;
   outDir?: string;
+  optimize?: boolean;
   icons: {
     inputDir: string;
     outputDir: string;

@@ -2,6 +2,7 @@ import { defineConfig } from '@ikona/cli';
 
 export default defineConfig({
   verbose: false,
+  optimize: false,
   icons: {
     inputDir: 'src/assets/icons',
     outputDir: 'public/icons',

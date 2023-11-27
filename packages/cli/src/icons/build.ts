@@ -6,9 +6,18 @@ import * as path from 'node:path';
 import { writeIfChanged } from '../utils/validations';
 import type { Config } from "../cli";
 import { defaultConfig } from '../utils/config';
+import { loadConfig, optimize } from "svgo";
+import { calculateFileSizeInKB } from '../utils/file';
 
+interface GenerateIconFilesOptions { 
+	files: Array<string>; 
+	inputDir: string, 
+	outputDir: string, 
+	spriteOutputDir: string 
+	shouldOptimize?: boolean;
+}
 
-async function generateIconFiles({ files, inputDir, outputDir, spriteOutputDir }: { files: Array<string>; inputDir: string, outputDir: string, spriteOutputDir: string }) {
+async function generateIconFiles({ files, inputDir, outputDir, spriteOutputDir, shouldOptimize }: GenerateIconFilesOptions) {
 	const spriteFilepath = path.join(spriteOutputDir, 'sprite.svg');
 	const typeOutputFilepath = path.join(outputDir, 'types', 'icon-name.d.ts');
 	const currentSprite = await fsExtra.readFile(spriteFilepath, 'utf8').catch(() => '');
@@ -26,10 +35,15 @@ async function generateIconFiles({ files, inputDir, outputDir, spriteOutputDir }
 
 	console.log(`Generating sprite for ${inputDir}`);
 
-	const output = await generateSvgSprite({
+	let output = await generateSvgSprite({
 		files,
 		inputDir,
 	});
+
+	if (shouldOptimize) {
+		const config = (await loadConfig()) || undefined;
+		output = optimize(output, config).data;
+	}
 
 	const hash = crypto.createHash('md5').update(output).digest('hex');
 
@@ -41,7 +55,8 @@ async function generateIconFiles({ files, inputDir, outputDir, spriteOutputDir }
 		console.log('✅', file);
 	}
 
-	console.log(`Saved to ${path.relative(process.cwd(), spriteFilepath)}`);
+	console.log(`File size: ${calculateFileSizeInKB(output)} KB`);
+	console.log(`Saved to ${path.relative(process.cwd(), spriteFilepath)}`); // TODO: add hash to filename
 
 	/** Types export */
 	const stringifiedIconNames = iconNames.map((name) => JSON.stringify(name));
@@ -119,7 +134,7 @@ async function generateSvgSprite({ files, inputDir }: { files: Array<string>; in
 }
 
 export async function generateSprite(config: Config) {
-    const { outDir = defaultConfig.outDir, icons } = config;
+    const { outDir = defaultConfig.outDir, icons, optimize } = config;
     const { inputDir, outputDir } = icons;
 
     const cwd = process.cwd();
@@ -148,7 +163,8 @@ export async function generateSprite(config: Config) {
             files,
             inputDir: inputDirRelative,
             outputDir: outputDirRelative,
-            spriteOutputDir: spriteOutputDirRelative
+            spriteOutputDir: spriteOutputDirRelative,
+			shouldOptimize: optimize,
         });
     }
 }
