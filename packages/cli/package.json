@@ -1,6 +1,6 @@
 {
   "name": "@ikona/cli",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Ikona CLI",
   "author": "Ivica Batinić <ivicabatinic123@gmail.com",
   "keywords": [
@@ -11,6 +11,10 @@
     "assets",
     "generator"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/isBatak/ikona"
+  },
   "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
