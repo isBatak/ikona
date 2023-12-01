@@ -2,16 +2,12 @@ import { defineConfig } from '@ikona/cli';
 
 export default defineConfig({
   verbose: false,
-  optimize: false,
   icons: {
+    optimize: false,
     inputDir: 'src/assets/icons',
-    outputDir: 'public/icons',
-    componentsOutputDir: 'src/components/media-and-icons/icon',
-    storyFile: 'src/components/media-and-icons/icon/Icon.stories.tsx',
+    spriteOutputDir: 'public/icons',
   },
   illustrations: {
     inputDir: 'public/illustrations',
-    typeDir: 'types',
-    storyFile: 'src/components/media-and-icons/illustration/Illustration.stories.tsx',
   },
 });

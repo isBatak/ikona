@@ -12,7 +12,6 @@ export async function init(cliConfig: Config) {
   const fileConfig = await resolveConfigFile();
 
   const config = mergeAndConcat(fileConfig, cliConfig);
-  // const isVerbose = config.verbose;
 
   await Promise.all([
     generateSprite(config),

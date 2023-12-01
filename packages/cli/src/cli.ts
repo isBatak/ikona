@@ -12,25 +12,34 @@ program
   .version(version)
   .description(description)
   .option('-v, --verbose', 'Verbose output')
-  .option('-o, --out-dir <path>', 'Output directory')
+  .option('--out-dir <path>', 'Output directory')
   .option('--optimize', 'Optimize SVGs')
+  .option('--force', 'Force generation of files')
   .parse(process.argv);
 
 export interface Config {
   verbose?: boolean;
-  outDir?: string;
-  optimize?: boolean;
+
+  /**
+   * Directory where the generated files
+   * Default: .ikona
+   */
+  outputDir?: string;
+
+  /**
+   * Force generation of files
+   */
+  force?: boolean;
+
   icons: {
+    optimize?: boolean;
     inputDir: string;
-    outputDir: string;
-    componentsOutputDir: string;
-    storyFile: string;
-  },
+    spriteOutputDir: string;
+  };
+
   illustrations: {
     inputDir: string;
-    typeDir: string;
-    storyFile: string;
-  },
+  };
 }
 
 const options = program.opts<Config>();

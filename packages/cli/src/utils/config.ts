@@ -3,8 +3,8 @@ import findUp from 'escalade/sync';
 import { resolve } from 'path';
 
 export const defaultConfig = {
-  outDir: '.ikona',
-}
+  outputDir: '.ikona',
+};
 
 const configs = ['.ts', '.js', '.mts', '.mjs', '.cts', '.cjs'];
 const configRegex = new RegExp(`ikona.config(${configs.join('|')})$`);

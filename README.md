@@ -33,15 +33,12 @@ import { defineConfig } from '@ikona/cli';
 export default defineConfig({
   verbose: false,
   icons: {
+    optimize: false,
     inputDir: 'src/assets/icons',
-    outputDir: 'public/icons',
-    componentsOutputDir: 'src/components/media-and-icons/icon',
-    storyFile: 'src/components/media-and-icons/icon/Icon.stories.tsx',
+    spriteOutputDir: 'public/icons',
   },
   illustrations: {
     inputDir: 'public/illustrations',
-    typeDir: 'types',
-    storyFile: 'src/components/media-and-icons/illustration/Illustration.stories.tsx',
   },
 });
 ```
@@ -76,9 +73,9 @@ export const Icon = ({ name }: { name: IconName }) => {
 To preload SVG sprites, include this snippet in your HTML `head`.
 
 ```jsx
-import { hash } from '.ikona/hash'
+import { hash } from '.ikona/hash';
 
-<link rel="preload" as="image/svg+xml" href={`icons/sprite.${hash}.svg`} />
+<link rel="preload" as="image/svg+xml" href={`icons/sprite.${hash}.svg`} />;
 ```
 
 ### Using illustrations
@@ -91,9 +88,7 @@ import React from 'react';
 import { IllustrationPath } from '.ikona/types/illustration-path';
 
 export const Illustration = ({ path }: { path: IllustrationPath }) => {
-  return (
-    <img src={path} />
-  );
+  return <img src={path} />;
 };
 ```
 
