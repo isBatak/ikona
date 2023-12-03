@@ -39,13 +39,6 @@
   },
   "dependencies": {
     "@changesets/changelog-github": "^0.5.0",
-    "@changesets/cli": "^2.27.1",
-    "@types/fs-extra": "^11.0.4",
-    "bundle-n-require": "^1.0.1",
-    "commander": "^11.1.0",
-    "escalade": "^3.1.1",
-    "fs-extra": "^11.1.1",
-    "glob": "^10.3.10",
-    "node-html-parser": "^6.1.11"
+    "@changesets/cli": "^2.27.1"
   }
 }
