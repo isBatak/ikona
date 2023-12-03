@@ -3,7 +3,7 @@ import { glob } from 'glob';
 import * as path from 'node:path';
 
 import { writeIfChanged } from '../utils/validations';
-import type { Config } from '../cli';
+import type { CliConfig, Config } from '../types';
 import { defaultConfig } from '../utils/config';
 
 interface GenerateIconFilesOptions {
@@ -86,9 +86,13 @@ export const illustrations = [
   }
 }
 
-export async function generateIllustrationTypes(config: Config) {
-  const { outputDir = defaultConfig.outputDir, illustrations } = config;
-  const { inputDir } = illustrations;
+export async function generateIllustrationTypes(
+  cliConfig: CliConfig,
+  config: Config
+) {
+  const outputDir =
+    cliConfig['out-dir'] || config.outputDir || defaultConfig.outputDir;
+  const { inputDir } = config.illustrations;
 
   const cwd = process.cwd();
 

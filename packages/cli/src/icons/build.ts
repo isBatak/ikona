@@ -4,7 +4,7 @@ import { glob } from 'glob';
 import { parse } from 'node-html-parser';
 import * as path from 'node:path';
 import { writeIfChanged } from '../utils/validations';
-import type { Config } from '../cli';
+import type { CliConfig, Config } from '../types';
 import { defaultConfig } from '../utils/config';
 import { loadConfig, optimize } from 'svgo';
 import { calculateFileSizeInKB } from '../utils/file';
@@ -15,6 +15,7 @@ interface GenerateIconFilesOptions {
   outputDir: string;
   spriteOutputDir: string;
   shouldOptimize?: boolean;
+  shouldHash?: boolean;
   force?: boolean;
 }
 
@@ -24,6 +25,7 @@ async function generateIconFiles({
   outputDir,
   spriteOutputDir,
   shouldOptimize,
+  shouldHash,
   force,
 }: GenerateIconFilesOptions) {
   const spriteFilepath = path.join(spriteOutputDir, 'sprite.svg');
@@ -59,7 +61,10 @@ async function generateIconFiles({
     output = optimize(output, config).data;
   }
 
-  const hash = crypto.createHash('md5').update(output).digest('hex');
+  let hash;
+  if (shouldHash) {
+    hash = crypto.createHash('md5').update(output).digest('hex');
+  }
 
   const spriteChanged = await writeIfChanged({
     filepath: spriteFilepath,
@@ -70,12 +75,22 @@ async function generateIconFiles({
 
   if (spriteChanged) {
     console.log(`Generating sprite for ${inputDir}`);
-    console.log(`Generated sprite with hash ${hash}`);
     for (const file of files) {
       console.log('✅', file);
     }
     console.log(`File size: ${calculateFileSizeInKB(output)} KB`);
-    console.log(`Saved to ${path.relative(process.cwd(), spriteFilepath)}`); // TODO: add hash to filename
+
+    if (shouldHash) {
+      console.log(`Generated sprite with hash ${hash}`);
+      console.log(
+        `Saved to ${path.relative(
+          process.cwd(),
+          spriteFilepath.replace(/\.svg$/, `.${hash}.svg`)
+        )}`
+      );
+    } else {
+      console.log(`Saved to ${path.relative(process.cwd(), spriteFilepath)}`);
+    }
   }
 
   /** Types export */
@@ -119,22 +134,24 @@ export const icons = [
   }
 
   /** Hash file export */
-  const hashOutputFilepath = path.join(outputDir, 'hash.ts');
-  const hashFileContent = `export const hash = '${hash}';\n`;
-  const hashFileChanged = await writeIfChanged({
-    filepath: hashOutputFilepath,
-    newContent: hashFileContent,
-    force,
-  });
+  if (shouldHash) {
+    const hashOutputFilepath = path.join(outputDir, 'hash.ts');
+    const hashFileContent = `export const hash = '${hash}';\n`;
+    const hashFileChanged = await writeIfChanged({
+      filepath: hashOutputFilepath,
+      newContent: hashFileContent,
+      force,
+    });
 
-  if (hashFileChanged) {
-    console.log(
-      `Hash file saved to ${path.relative(process.cwd(), hashOutputFilepath)}`
-    );
+    if (hashFileChanged) {
+      console.log(
+        `Hash file saved to ${path.relative(process.cwd(), hashOutputFilepath)}`
+      );
+    }
   }
 
   /** Log */
-  if (spriteChanged || typesChanged || hashFileChanged || iconsChanged) {
+  if (spriteChanged || typesChanged || iconsChanged) {
     console.log(`Generated ${files.length} icons`);
   } else {
     console.log(`Icons are up to date`);
@@ -187,9 +204,11 @@ async function generateSvgSprite({
   ].join('\n');
 }
 
-export async function generateSprite(config: Config) {
-  const { outputDir = defaultConfig.outputDir, icons } = config;
-  const { inputDir, spriteOutputDir, optimize } = icons;
+export async function generateSprite(cliConfig: CliConfig, config: Config) {
+  const outputDir =
+    cliConfig['out-dir'] || config.outputDir || defaultConfig.outputDir;
+  const { icons, force } = config;
+  const { inputDir, spriteOutputDir, optimize, hash } = icons;
 
   const cwd = process.cwd();
 
@@ -217,8 +236,9 @@ export async function generateSprite(config: Config) {
       inputDir: inputDirRelative,
       outputDir: outputDirRelative,
       spriteOutputDir: spriteOutputDirRelative,
-      shouldOptimize: optimize,
-      force: config.force,
+      shouldOptimize: cliConfig.optimize || optimize,
+      shouldHash: cliConfig.hash || hash,
+      force: cliConfig.force || force,
     });
   }
 }
