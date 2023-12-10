@@ -1,8 +1,6 @@
 <div align="center">
 <div style="width: 180px">
-
-![ikona](resources/logo.svg)
-
+<img src="resources/logo.svg" style="max-width: 180px" alt="ikona">
 </div>
 </div>
 
