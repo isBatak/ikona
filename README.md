@@ -1,8 +1,4 @@
-<div align="center">
-<div style="width: 180px">
-<img src="resources/logo.svg" style="max-width: 180px" alt="ikona">
-</div>
-</div>
+![ikona](resources/logo.svg)
 
 An SVG sprite and illustration asset generator called /ikɔna/.
 
