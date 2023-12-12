@@ -1,0 +1,62 @@
+{
+  "name": "@ikona/studio",
+  "version": "0.0.1",
+  "description": "Documentation for Ikona assets",
+  "main": "dist/studio.js",
+  "module": "dist/studio.mjs",
+  "types": "dist/studio.d.ts",
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/studio.d.ts",
+      "require": "./dist/studio.js",
+      "import": {
+        "types": "./dist/studio.d.mts",
+        "default": "./dist/studio.mjs"
+      }
+    }
+  },
+  "scripts": {
+    "prepare": "panda codegen",
+    "panda": "node ../cli/bin.js",
+    "codegen": "node ../cli/bin.js codegen",
+    "build": "tsup scripts --format=esm,cjs --dts --no-splitting --shims",
+    "postbuild": "pnpm panda",
+    "build-fast": "tsup scripts --format=esm,cjs --no-dts --no-splitting --shims",
+    "dev": "pnpm build-fast --watch scripts",
+    "dev:panda": "node ../cli/bin.js --clean --watch",
+    "dev:astro": "astro dev",
+    "start": "concurrently \"pnpm dev:panda\" \"pnpm dev:astro\""
+  },
+  "files": [
+    "dist",
+    "src",
+    "public",
+    "styled-system",
+    "*.ts",
+    "*.mjs"
+  ],
+  "keywords": [
+    "ikona",
+    "studio",
+    "illustations"
+  ],
+  "author": "Segun Adebayo <joseshegs@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@astrojs/react": "2.3.2",
+    "astro": "4.0.3",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "vite": "5.0.7"
+  },
+  "devDependencies": {
+    "@pandacss/astro": "^0.21.0",
+    "@pandacss/dev": "^0.21.0",
+    "@types/react": "18.2.42",
+    "@types/react-dom": "18.2.17"
+  }
+}
