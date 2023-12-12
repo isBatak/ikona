@@ -40,3 +40,13 @@ export interface CliConfig {
 
   hash?: boolean;
 }
+
+export interface StudioCommandFlags {
+  build?: boolean;
+  preview?: boolean;
+  config?: string;
+  outdir?: string;
+  port?: string;
+  host?: boolean;
+  cwd?: string;
+}

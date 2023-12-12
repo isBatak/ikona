@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "ikona": "ikona"
+    "ikona": "ikona",
+    "studio": "ikona studio"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.2",

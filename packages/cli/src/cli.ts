@@ -25,7 +25,7 @@ program
   .option('--port <port>', 'Port')
   .option('--host', 'Host')
   .option('-c, --config <path>', 'Path to ikona config file')
-  .option('--cwd <cwd>', 'Current working directory', { default: cwd })
+  .option('--cwd <cwd>', 'Current working directory')
   .option('--outdir', 'Output directory for static files')
   .action(studio);
 
