@@ -36,6 +36,7 @@ export default defineConfig({
     optimize: false,
     inputDir: 'src/assets/icons',
     spriteOutputDir: 'public/icons',
+    hash: true,
   },
   illustrations: {
     inputDir: 'public/illustrations',
