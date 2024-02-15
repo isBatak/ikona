@@ -81,7 +81,7 @@ import { hash } from '.ikona/hash';
 
 ### Using illustrations
 
-> Illustration is conceptually similar to icons but the difference is that illustrations are more complex and use multiple colors. Illustrations could be `.png`, `.jpg`, or `.svg` files and they live in a public directory, thats why they use `<img>` tah under the hood.
+> Illustration is conceptually similar to icons but the difference is that illustrations are more complex and use multiple colors. Illustrations could be `.png`, `.jpg`, or `.svg` files and they live in a public directory, thats why they use `<img>` tag under the hood.
 
 To use illustrations, import the generated code to create a React component.
 
