@@ -13,7 +13,7 @@ An SVG sprite and illustration asset generator called /ikɔna/.
 ## Motivation
 
 Inlining SVGs in the DOM comes with a price of performance. This is why we use SVG sprites. But creating and maintaining SVG sprites is a pain. This is where Ikona comes in to help.
-Ikona distinguishes two types of SVGs: icons and illustrations. Icons are small and simple SVGs that uses only one color. Illustrations are SVGs that are more complex and use multiple colors.
+Ikona distinguishes two types of SVGs: icons and illustrations. Icons are small and simple SVGs that use only one color. Illustrations are SVGs that are more complex and use multiple colors.
 
 > This project is inspired by this article [The "best" way to manage icons in React.js](https://benadam.me/thoughts/react-svg-sprites/).
 
@@ -76,7 +76,12 @@ To preload SVG sprites, include this snippet in your HTML `head`.
 ```jsx
 import { hash } from '.ikona/hash';
 
-<link rel="preload" as="image/svg+xml" href={`icons/sprite.${hash}.svg`} />;
+<link
+  rel="preload"
+  as="image"
+  type="image/svg+xml"
+  href={`icons/sprite.${hash}.svg`}
+/>;
 ```
 
 ### Using illustrations
@@ -127,7 +132,7 @@ Your built code will be in the `./dist/` directory.
 
 `pnpm run test`
 
-Cleans, then builds, and tests the built code.
+Cleans, then build and test the built code.
 
 ### **bundle**
 
