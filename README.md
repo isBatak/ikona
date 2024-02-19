@@ -76,7 +76,7 @@ To preload SVG sprites, include this snippet in your HTML `head`.
 ```jsx
 import { hash } from '.ikona/hash';
 
-<link rel="preload" as="image/svg+xml" href={`icons/sprite.${hash}.svg`} />;
+<link rel="preload" as="image" href={`icons/sprite.${hash}.svg`} />;
 ```
 
 ### Using illustrations
