@@ -7200,7 +7200,7 @@ packages:
       lilconfig: 2.1.0
       postcss: 8.4.31
       ts-node: 10.9.2(@types/node@20.9.0)(typescript@5.2.2)
-      yaml: 2.3.4
+      yaml: 2.4.1
     dev: true
 
   /postcss-load-config@4.0.1(ts-node@10.9.1):
