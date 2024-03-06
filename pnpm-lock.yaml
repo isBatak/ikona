@@ -138,7 +138,7 @@ importers:
         version: 10.3.10
       node-html-parser:
         specifier: ^6.1.11
-        version: 6.1.11
+        version: 6.1.12
       svgo:
         specifier: ^3.0.4
         version: 3.0.4
@@ -6826,8 +6826,8 @@ packages:
     dependencies:
       whatwg-url: 5.0.0
 
-  /node-html-parser@6.1.11:
-    resolution: {integrity: sha512-FAgwwZ6h0DSDWxfD0Iq1tsDcBCxdJB1nXpLPPxX8YyVWzbfCjKWEzaynF4gZZ/8hziUmp7ZSaKylcn0iKhufUQ==}
+  /node-html-parser@6.1.12:
+    resolution: {integrity: sha512-/bT/Ncmv+fbMGX96XG9g05vFt43m/+SYKIs9oAemQVYyVcZmDAI2Xq/SbNcpOA35eF0Zk2av3Ksf+Xk8Vt8abA==}
     dependencies:
       css-select: 5.1.0
       he: 1.2.0
