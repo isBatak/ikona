@@ -211,6 +211,7 @@ export async function generateSprite(cliConfig: CliConfig, config: Config) {
   const { inputDir, spriteOutputDir, optimize, hash } = icons;
 
   const cwd = process.cwd();
+  console.log('CWD', cwd);
 
   const inputDirRelative = path.relative(cwd, inputDir);
   const outputDirRelative = path.join(cwd, outputDir);
