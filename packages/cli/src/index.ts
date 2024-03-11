@@ -15,3 +15,5 @@ export async function init(cliConfig: CliConfig) {
     generateIllustrationTypes(cliConfig, confgi),
   ]);
 }
+
+export type { CliConfig, Config };
