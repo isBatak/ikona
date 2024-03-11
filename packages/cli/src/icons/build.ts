@@ -175,7 +175,8 @@ async function generateSvgSprite({
   // Each SVG becomes a symbol and we wrap them all in a single SVG
   const symbols = await Promise.all(
     files.map(async (file) => {
-      const input = await fsExtra.readFile(path.join(inputDir, file), 'utf8');
+      const svgPath = path.join(inputDir, file);
+      const input = await fsExtra.readFile(svgPath, 'utf8');
       const root = parse(input);
 
       const svg = root.querySelector('svg');
