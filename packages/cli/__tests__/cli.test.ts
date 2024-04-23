@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { execSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { describe, expect, test, beforeAll } from 'vitest';
+import { describe, expect, it, beforeAll } from 'vitest';
 import fs from 'node:fs/promises';
 
 describe('cli', () => {
@@ -15,7 +15,7 @@ describe('cli', () => {
     await fs.mkdir(testsCwd, { recursive: true });
   });
 
-  test.skip('should work', () => {
+  it.skip('should work', () => {
     const cmd = `node ${binPath}"`;
 
     console.log(cmd);

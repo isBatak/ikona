@@ -1,8 +1,8 @@
-import { describe, expect, test, beforeAll, afterAll } from 'vitest';
-import { generateSprite } from '../src/icons/build';
+import { describe, expect, it } from 'vitest';
+import { generateSprite } from '../src/icons/generate-sprite';
 
 describe('build', () => {
-  test('should generate icons', async () => {
+  it('should generate icons', async () => {
     const result = await generateSprite(
       {},
       {

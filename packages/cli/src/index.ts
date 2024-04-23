@@ -1,4 +1,4 @@
-import { generateSprite } from './icons/build';
+import { generateSprite } from './icons';
 import { generateIllustrationTypes } from './illustrations/types';
 import type { CliConfig, Config } from './types';
 import { resolveConfigFile } from './utils/config';

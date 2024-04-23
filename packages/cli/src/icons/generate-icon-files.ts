@@ -1,13 +1,11 @@
 import crypto from 'crypto';
 import fsExtra from 'fs-extra';
-import { glob } from 'glob';
-import { parse } from 'node-html-parser';
 import * as path from 'node:path';
 import { writeIfChanged } from '../utils/validations';
-import type { CliConfig, Config } from '../types';
-import { defaultConfig } from '../utils/config';
 import { loadConfig, optimize } from 'svgo';
 import { calculateFileSizeInKB } from '../utils/file';
+import { generateSvgSprite } from './generate-svg-sprite';
+import { iconName } from './icon-name';
 
 interface GenerateIconFilesOptions {
   files: Array<string>;
@@ -19,7 +17,7 @@ interface GenerateIconFilesOptions {
   force?: boolean;
 }
 
-async function generateIconFiles({
+export async function generateIconFiles({
   files,
   inputDir,
   outputDir,
@@ -29,7 +27,11 @@ async function generateIconFiles({
   force,
 }: GenerateIconFilesOptions) {
   const spriteFilepath = path.join(spriteOutputDir, 'sprite.svg');
-  const typeOutputFilepath = path.join(outputDir, 'types', 'icon-name.d.ts');
+  const typesDir = path.join(outputDir, 'types');
+  const typeOutputFilepath = path.join(typesDir, 'icon-name.d.ts');
+
+  await fsExtra.ensureDir(typesDir);
+
   const currentSprite = await fsExtra
     .readFile(spriteFilepath, 'utf8')
     .catch(() => '');
@@ -96,8 +98,8 @@ async function generateIconFiles({
   /** Types export */
   const stringifiedIconNames = iconNames.map((name) => JSON.stringify(name));
   const typeOutputContent = `export type IconName =
-\t| ${stringifiedIconNames.join('\n\t| ').replace(/"/g, "'")};
-`;
+    \t| ${stringifiedIconNames.join('\n\t| ').replace(/"/g, "'")};
+    `;
   const typesChanged = await writeIfChanged({
     filepath: typeOutputFilepath,
     newContent: typeOutputContent,
@@ -113,11 +115,11 @@ async function generateIconFiles({
   /** Export icon names */
   const iconsOutputFilepath = path.join(outputDir, 'icons.ts');
   const iconsOutputContent = `import { IconName } from './types/icon-name';
-
-export const icons = [
-\t${stringifiedIconNames.join(',\n\t')},
-] satisfies Array<IconName>;
-`;
+  
+  export const icons = [
+  \t${stringifiedIconNames.join(',\n\t')},
+  ] satisfies Array<IconName>;
+  `;
   const iconsChanged = await writeIfChanged({
     filepath: iconsOutputFilepath,
     newContent: iconsOutputContent,
@@ -155,92 +157,5 @@ export const icons = [
     console.log(`Generated ${files.length} icons`);
   } else {
     console.log(`Icons are up to date`);
-  }
-}
-
-function iconName(file: string) {
-  return file.replace(/\.svg$/, '').replace(/\\/g, '/');
-}
-
-/**
- * Creates a single SVG file that contains all the icons
- */
-async function generateSvgSprite({
-  files,
-  inputDir,
-}: {
-  files: Array<string>;
-  inputDir: string;
-}) {
-  // Each SVG becomes a symbol and we wrap them all in a single SVG
-  const symbols = await Promise.all(
-    files.map(async (file) => {
-      const svgPath = path.join(inputDir, file);
-      const input = await fsExtra.readFile(svgPath, 'utf8');
-      const root = parse(input);
-
-      const svg = root.querySelector('svg');
-      if (!svg) throw new Error('No SVG element found');
-
-      svg.tagName = 'symbol';
-      svg.setAttribute('id', iconName(file));
-      svg.removeAttribute('xmlns');
-      svg.removeAttribute('xmlns:xlink');
-      svg.removeAttribute('version');
-      svg.removeAttribute('width');
-      svg.removeAttribute('height');
-
-      return svg.toString().trim();
-    })
-  );
-
-  return [
-    `<?xml version="1.0" encoding="UTF-8"?>`,
-    `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="0" height="0">`,
-    `<defs>`, // for semantics: https://developer.mozilla.org/en-US/docs/Web/SVG/Element/defs
-    ...symbols,
-    `</defs>`,
-    `</svg>`,
-    '', // trailing newline
-  ].join('\n');
-}
-
-export async function generateSprite(cliConfig: CliConfig, config: Config) {
-  const outputDir =
-    cliConfig['out-dir'] || config.outputDir || defaultConfig.outputDir;
-  const { icons, force } = config;
-  const { inputDir, spriteOutputDir, optimize, hash } = icons;
-
-  const cwd = process.cwd();
-  console.log('CWD', cwd);
-
-  const inputDirRelative = path.relative(cwd, inputDir);
-  const outputDirRelative = path.join(cwd, outputDir);
-  const spriteOutputDirRelative = path.join(cwd, spriteOutputDir);
-
-  await Promise.all([
-    fsExtra.ensureDir(inputDirRelative),
-    fsExtra.ensureDir(outputDirRelative),
-    fsExtra.ensureDir(spriteOutputDirRelative),
-  ]);
-
-  const files = glob
-    .sync('**/*.svg', {
-      cwd: inputDirRelative,
-    })
-    .sort((a, b) => a.localeCompare(b));
-
-  if (files.length === 0) {
-    console.log(`No SVG files found in ${inputDirRelative}`);
-  } else {
-    await generateIconFiles({
-      files,
-      inputDir: inputDirRelative,
-      outputDir: outputDirRelative,
-      spriteOutputDir: spriteOutputDirRelative,
-      shouldOptimize: cliConfig.optimize || optimize,
-      shouldHash: cliConfig.hash || hash,
-      force: cliConfig.force || force,
-    });
   }
 }

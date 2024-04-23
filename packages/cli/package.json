@@ -48,7 +48,6 @@
     "build": "tsup src --format=esm,cjs --dts --no-splitting --shims",
     "build-fast": "tsup src --format=esm,cjs --no-dts --no-splitting --shims",
     "dev": "pnpm build-fast --watch src",
-    "test": "node --require ts-node/register --test ./**/*.test.ts",
     "bundle": "pnpm run build && pkg . --out-dir ./exec/"
   },
   "devDependencies": {
