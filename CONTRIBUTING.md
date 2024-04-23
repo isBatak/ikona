@@ -69,7 +69,7 @@ If you are interested in the detailed specification you can visit https://www.co
 
 3. Make and commit your changes following the
    [commit convention](https://github.com/isBatak/ikona/blob/main/CONTRIBUTING.md#commit-convention). As you develop,
-   you can run `pnpm pkg <module> build` and `pnpm pkg <module> test` to make sure everything works as expected. Please
+   you can run `pnpm --filter=<module> build` and `pnpm --filter=<module> test` to make sure everything works as expected. Please
    note that you might have to run `pnpm boot` first in order to build all dependencies.
 
 4. Run `pnpm changeset` to create a detailed description of your changes. This will be used to generate a changelog when
