@@ -3,6 +3,8 @@ import { generateIllustrationTypes } from './illustrations/types';
 import type { CliConfig, Config } from './types';
 import { resolveConfigFile } from './utils/config';
 
+export type { CliConfig, Config };
+
 export function defineConfig(config: Config) {
   return config;
 }
