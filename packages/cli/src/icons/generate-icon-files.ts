@@ -1,11 +1,12 @@
-import crypto from 'crypto';
-import fsExtra from 'fs-extra';
-import * as path from 'node:path';
-import { writeIfChanged } from '../utils/validations';
-import { loadConfig, optimize } from 'svgo';
-import { calculateFileSizeInKB } from '../utils/file';
-import { generateSvgSprite } from './generate-svg-sprite';
-import { iconName } from './icon-name';
+import crypto from "crypto";
+import fsExtra from "fs-extra";
+import * as path from "node:path";
+import { writeIfChanged } from "../utils/validations";
+import { loadConfig, optimize } from "svgo";
+import { calculateFileSizeInKB } from "../utils/file";
+import { generateSvgSprite } from "./generate-svg-sprite";
+import { iconName } from "./icon-name";
+import { getIconsData } from "./get-icons-data";
 
 interface GenerateIconFilesOptions {
   files: Array<string>;
@@ -26,18 +27,18 @@ export async function generateIconFiles({
   shouldHash,
   force,
 }: GenerateIconFilesOptions) {
-  const spriteFilepath = path.join(spriteOutputDir, 'sprite.svg');
-  const typesDir = path.join(outputDir, 'types');
-  const typeOutputFilepath = path.join(typesDir, 'icon-name.d.ts');
+  const spriteFilepath = path.join(spriteOutputDir, "sprite.svg");
+  const typesDir = path.join(outputDir, "types");
+  const typeOutputFilepath = path.join(typesDir, "icon-name.d.ts");
 
   await fsExtra.ensureDir(typesDir);
 
   const currentSprite = await fsExtra
-    .readFile(spriteFilepath, 'utf8')
-    .catch(() => '');
+    .readFile(spriteFilepath, "utf8")
+    .catch(() => "");
   const currentTypes = await fsExtra
-    .readFile(typeOutputFilepath, 'utf8')
-    .catch(() => '');
+    .readFile(typeOutputFilepath, "utf8")
+    .catch(() => "");
 
   const iconNames = files.map((file) => iconName(file));
 
@@ -53,10 +54,9 @@ export async function generateIconFiles({
     return;
   }
 
-  let output = await generateSvgSprite({
-    files,
-    inputDir,
-  });
+  const iconsData = getIconsData(files, inputDir);
+
+  let output = generateSvgSprite(iconsData);
 
   if (shouldOptimize) {
     const config = (await loadConfig()) || undefined;
@@ -65,7 +65,7 @@ export async function generateIconFiles({
 
   let hash;
   if (shouldHash) {
-    hash = crypto.createHash('md5').update(output).digest('hex');
+    hash = crypto.createHash("md5").update(output).digest("hex");
   }
 
   const spriteChanged = await writeIfChanged({
@@ -78,7 +78,7 @@ export async function generateIconFiles({
   if (spriteChanged) {
     console.log(`Generating sprite for ${inputDir}`);
     for (const file of files) {
-      console.log('✅', file);
+      console.log("✅", file);
     }
     console.log(`File size: ${calculateFileSizeInKB(output)} KB`);
 
@@ -98,7 +98,7 @@ export async function generateIconFiles({
   /** Types export */
   const stringifiedIconNames = iconNames.map((name) => JSON.stringify(name));
   const typeOutputContent = `export type IconName =
-    \t| ${stringifiedIconNames.join('\n\t| ').replace(/"/g, "'")};
+    \t| ${stringifiedIconNames.join("\n\t| ").replace(/"/g, "'")};
     `;
   const typesChanged = await writeIfChanged({
     filepath: typeOutputFilepath,
@@ -113,11 +113,11 @@ export async function generateIconFiles({
   }
 
   /** Export icon names */
-  const iconsOutputFilepath = path.join(outputDir, 'icons.ts');
+  const iconsOutputFilepath = path.join(outputDir, "icons.ts");
   const iconsOutputContent = `import { IconName } from './types/icon-name';
   
   export const icons = [
-  \t${stringifiedIconNames.join(',\n\t')},
+  \t${stringifiedIconNames.join(",\n\t")},
   ] satisfies Array<IconName>;
   `;
   const iconsChanged = await writeIfChanged({
@@ -137,7 +137,7 @@ export async function generateIconFiles({
 
   /** Hash file export */
   if (shouldHash) {
-    const hashOutputFilepath = path.join(outputDir, 'hash.ts');
+    const hashOutputFilepath = path.join(outputDir, "hash.ts");
     const hashFileContent = `export const hash = '${hash}';\n`;
     const hashFileChanged = await writeIfChanged({
       filepath: hashOutputFilepath,

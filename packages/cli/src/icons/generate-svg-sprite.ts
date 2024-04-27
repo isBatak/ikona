@@ -1,40 +1,29 @@
-import fsExtra from 'fs-extra';
-import { parse } from 'node-html-parser';
-import path from 'path';
-import { iconName } from './icon-name';
+import { parse } from "node-html-parser";
+import { IconData } from "./get-icons-data";
 
 /**
  * Creates a single SVG file that contains all the icons
  */
 
-export async function generateSvgSprite({
-  files,
-  inputDir,
-}: {
-  files: Array<string>;
-  inputDir: string;
-}) {
+export function generateSvgSprite(iconsData: Array<IconData>) {
   // Each SVG becomes a symbol and we wrap them all in a single SVG
-  const symbols = await Promise.all(
-    files.map(async (file) => {
-      const svgPath = path.join(inputDir, file);
-      const input = await fsExtra.readFile(svgPath, 'utf8');
-      const root = parse(input);
+  const symbols = iconsData.map((iconData) => {
+    const input = iconData.content;
+    const root = parse(input);
 
-      const svg = root.querySelector('svg');
-      if (!svg) throw new Error('No SVG element found');
+    const svg = root.querySelector("svg");
+    if (!svg) throw new Error("No SVG element found");
 
-      svg.tagName = 'symbol';
-      svg.setAttribute('id', iconName(file));
-      svg.removeAttribute('xmlns');
-      svg.removeAttribute('xmlns:xlink');
-      svg.removeAttribute('version');
-      svg.removeAttribute('width');
-      svg.removeAttribute('height');
+    svg.tagName = "symbol";
+    svg.setAttribute("id", iconData.name);
+    svg.removeAttribute("xmlns");
+    svg.removeAttribute("xmlns:xlink");
+    svg.removeAttribute("version");
+    svg.removeAttribute("width");
+    svg.removeAttribute("height");
 
-      return svg.toString().trim();
-    })
-  );
+    return svg.toString().trim();
+  });
 
   return [
     `<?xml version="1.0" encoding="UTF-8"?>`,
@@ -43,6 +32,6 @@ export async function generateSvgSprite({
     ...symbols,
     `</defs>`,
     `</svg>`,
-    '', // trailing newline
-  ].join('\n');
+    "", // trailing newline
+  ].join("\n");
 }
