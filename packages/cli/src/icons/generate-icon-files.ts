@@ -7,6 +7,9 @@ import { calculateFileSizeInKB } from "../utils/file";
 import { generateSvgSprite } from "./generate-svg-sprite";
 import { iconName } from "./icon-name";
 import { getIconsData } from "./get-icons-data";
+import { typeTemplate } from "./templates/type";
+import { iconsTemplate } from "./templates/icons";
+import { hashTemplate } from "./templates/hash";
 
 interface GenerateIconFilesOptions {
   files: Array<string>;
@@ -97,9 +100,7 @@ export async function generateIconFiles({
 
   /** Types export */
   const stringifiedIconNames = iconNames.map((name) => JSON.stringify(name));
-  const typeOutputContent = `export type IconName =
-    \t| ${stringifiedIconNames.join("\n\t| ").replace(/"/g, "'")};
-    `;
+  const typeOutputContent = typeTemplate(stringifiedIconNames);
   const typesChanged = await writeIfChanged({
     filepath: typeOutputFilepath,
     newContent: typeOutputContent,
@@ -114,12 +115,7 @@ export async function generateIconFiles({
 
   /** Export icon names */
   const iconsOutputFilepath = path.join(outputDir, "icons.ts");
-  const iconsOutputContent = `import { IconName } from './types/icon-name';
-  
-  export const icons = [
-  \t${stringifiedIconNames.join(",\n\t")},
-  ] satisfies Array<IconName>;
-  `;
+  const iconsOutputContent = iconsTemplate(stringifiedIconNames);
   const iconsChanged = await writeIfChanged({
     filepath: iconsOutputFilepath,
     newContent: iconsOutputContent,
@@ -136,9 +132,9 @@ export async function generateIconFiles({
   }
 
   /** Hash file export */
-  if (shouldHash) {
+  if (shouldHash && hash) {
     const hashOutputFilepath = path.join(outputDir, "hash.ts");
-    const hashFileContent = `export const hash = '${hash}';\n`;
+    const hashFileContent = hashTemplate(hash);
     const hashFileChanged = await writeIfChanged({
       filepath: hashOutputFilepath,
       newContent: hashFileContent,

@@ -1,4 +1,4 @@
-import { getIconsData } from "./get-icons-data";
+import { getIconsData } from "../src/icons/get-icons-data";
 import fs from "fs-extra";
 
 jest.mock("fs-extra", () => ({
