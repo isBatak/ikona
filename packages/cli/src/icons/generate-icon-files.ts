@@ -10,29 +10,27 @@ import { getIconsData } from "./get-icons-data";
 import { typeTemplate } from "./templates/type";
 import { iconsTemplate } from "./templates/icons";
 import { hashTemplate } from "./templates/hash";
+import { createIconsContext } from "./context";
 
 interface GenerateIconFilesOptions {
   files: Array<string>;
-  inputDir: string;
-  outputDir: string;
-  spriteOutputDir: string;
-  shouldOptimize?: boolean;
-  shouldHash?: boolean;
-  force?: boolean;
+  context: ReturnType<typeof createIconsContext>;
 }
 
 export async function generateIconFiles({
   files,
-  inputDir,
-  outputDir,
-  spriteOutputDir,
-  shouldOptimize,
-  shouldHash,
-  force,
+  context,
 }: GenerateIconFilesOptions) {
-  const spriteFilepath = path.join(spriteOutputDir, "sprite.svg");
-  const typesDir = path.join(outputDir, "types");
-  const typeOutputFilepath = path.join(typesDir, "icon-name.d.ts");
+  const {
+    spriteFilepath,
+    typesDir,
+    typeOutputFilepath,
+    inputDir,
+    shouldOptimize,
+    shouldHash,
+    force,
+    outputDir,
+  } = context;
 
   await fsExtra.ensureDir(typesDir);
 

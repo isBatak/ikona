@@ -1,13 +1,6 @@
 {
   "extends": "../../tsconfig.json",
-  "include": [
-    "src",
-    "index.ts",
-    "src/icons/generate-svg-sprite.vitest.ts",
-    "__tests__/generate-sprite.test.ts",
-    "__tests__/generate-svg-sprite.test.ts",
-    "__tests__/get-icons-data.test.ts"
-  ],
+  "include": ["src", "__tests__/**/*"],
   "compilerOptions": {
     "tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo"
   }

@@ -3,8 +3,7 @@ import { glob } from "glob";
 import * as path from "node:path";
 
 import { writeIfChanged } from "../utils/validations";
-import type { CliConfig, Config } from "../types";
-import { defaultConfig } from "../utils/config";
+import type { Config } from "../types";
 import { illustrationsTemplate } from "./templates/illustrations";
 import { pathsTemplate } from "./templates/paths";
 
@@ -83,12 +82,8 @@ async function generateTypes({
   }
 }
 
-export async function generateIllustrationTypes(
-  cliConfig: CliConfig,
-  config: Config
-) {
-  const outputDir =
-    cliConfig["out-dir"] || config.outputDir || defaultConfig.outputDir;
+export async function generateIllustrationTypes(config: Config) {
+  const outputDir = config.outputDir;
   const { inputDir } = config.illustrations;
 
   const cwd = process.cwd();
