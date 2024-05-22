@@ -1,11 +1,11 @@
 import { parse } from "node-html-parser";
-import { IconData } from "./get-icons-data";
+import { IconData } from "../get-icons-data";
 
 /**
  * Creates a single SVG file that contains all the icons
  */
 
-export function generateSvgSprite(iconsData: Array<IconData>) {
+export function svgSpriteTemplate(iconsData: Array<IconData>) {
   // Each SVG becomes a symbol and we wrap them all in a single SVG
   const symbols = iconsData.map((iconData) => {
     const input = iconData.content;

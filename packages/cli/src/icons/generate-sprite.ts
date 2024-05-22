@@ -7,12 +7,6 @@ import { createIconsContext } from "./context";
 export async function generateSprite(config: Config) {
   const context = createIconsContext(config);
 
-  await Promise.all([
-    fsExtra.ensureDir(context.inputDir),
-    fsExtra.ensureDir(context.outputDir),
-    fsExtra.ensureDir(context.spriteOutputDir),
-  ]);
-
   const files = glob
     .sync("**/*.svg", {
       cwd: context.inputDir,
@@ -22,6 +16,12 @@ export async function generateSprite(config: Config) {
   if (files.length === 0) {
     console.log(`No SVG files found in ${context.inputDir}`);
   } else {
+    await Promise.all([
+      fsExtra.ensureDir(context.outputDir),
+      fsExtra.ensureDir(context.spriteOutputDir),
+      fsExtra.ensureDir(context.typesDir),
+    ]);
+
     await generateIconFiles({ files, context });
   }
 }

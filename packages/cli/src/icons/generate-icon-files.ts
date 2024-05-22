@@ -4,7 +4,7 @@ import * as path from "node:path";
 import { writeIfChanged } from "../utils/validations";
 import { loadConfig, optimize } from "svgo";
 import { calculateFileSizeInKB } from "../utils/file";
-import { generateSvgSprite } from "./generate-svg-sprite";
+import { svgSpriteTemplate } from "./templates/svg-sprite";
 import { iconName } from "./icon-name";
 import { getIconsData } from "./get-icons-data";
 import { typeTemplate } from "./templates/type";
@@ -23,7 +23,6 @@ export async function generateIconFiles({
 }: GenerateIconFilesOptions) {
   const {
     spriteFilepath,
-    typesDir,
     typeOutputFilepath,
     inputDir,
     shouldOptimize,
@@ -31,8 +30,6 @@ export async function generateIconFiles({
     force,
     outputDir,
   } = context;
-
-  await fsExtra.ensureDir(typesDir);
 
   const currentSprite = await fsExtra
     .readFile(spriteFilepath, "utf8")
@@ -57,7 +54,7 @@ export async function generateIconFiles({
 
   const iconsData = getIconsData(files, inputDir);
 
-  let output = generateSvgSprite(iconsData);
+  let output = svgSpriteTemplate(iconsData);
 
   if (shouldOptimize) {
     const config = (await loadConfig()) || undefined;

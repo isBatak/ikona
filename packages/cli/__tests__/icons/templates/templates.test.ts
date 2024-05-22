@@ -1,9 +1,9 @@
-import { iconsTemplate } from "../src/icons/templates/icons";
-import { typeTemplate } from "../src/icons/templates/type";
-import { hashTemplate } from "../src/icons/templates/hash";
+import { iconsTemplate } from "../../../src/icons/templates/icons";
+import { typeTemplate } from "../../../src/icons/templates/type";
+import { hashTemplate } from "../../../src/icons/templates/hash";
 
-import { illustrationsTemplate } from "../src/illustrations/templates/illustrations";
-import { pathsTemplate } from "../src/illustrations/templates/paths";
+import { illustrationsTemplate } from "../../../src/illustrations/templates/illustrations";
+import { pathsTemplate } from "../../../src/illustrations/templates/paths";
 
 describe("templates", () => {
   describe("icons", () => {
