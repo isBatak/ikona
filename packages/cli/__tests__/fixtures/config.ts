@@ -5,7 +5,7 @@ export const configFixture: Config = {
   icons: {
     inputDir: "icons",
     spriteOutputDir: "output",
-    optimize: false, // TODO fix optimize
+    optimize: true,
     hash: true,
   },
   illustrations: {
