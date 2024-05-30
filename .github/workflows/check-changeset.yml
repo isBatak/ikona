@@ -1,0 +1,21 @@
+name: Check for Changeset File
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-changeset:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Check for changeset file
+        run: |
+          if ! git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep -q '^.changeset/.*\.md$'; then
+            echo "No changeset file found in .changeset directory. Please add a changeset file."
+            exit 1
+          fi
