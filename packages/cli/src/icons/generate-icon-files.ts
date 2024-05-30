@@ -2,7 +2,6 @@ import crypto from "crypto";
 import fsExtra from "fs-extra";
 import * as path from "node:path";
 import { writeIfChanged } from "../utils/validations";
-import { loadConfig, optimize } from "svgo";
 import { calculateFileSizeInKB } from "../utils/file";
 import { svgSpriteTemplate } from "./templates/svg-sprite";
 import { iconName } from "./icon-name";
@@ -12,6 +11,7 @@ import { iconsTemplate } from "./templates/icons";
 import { hashTemplate } from "./templates/hash";
 import { createIconsContext } from "./context";
 import { addHashToSpritePath } from "../utils/hash";
+import { optimize } from "../utils/optimize";
 
 interface GenerateIconFilesOptions {
   files: Array<string>;
@@ -62,8 +62,7 @@ export async function generateIconFiles({
   let output = svgSpriteTemplate(iconsData);
 
   if (shouldOptimize) {
-    const config = (await loadConfig()) || undefined;
-    output = optimize(output, config).data;
+    output = optimize(output);
   }
 
   let hash;
