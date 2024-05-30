@@ -1,5 +1,6 @@
-import fsExtra from 'fs-extra';
-import { join, extname } from 'node:path';
+import fsExtra from "fs-extra";
+import { join, extname } from "node:path";
+import { addHashToSpritePath } from "./hash";
 
 export function validatePath(
   path: string | undefined,
@@ -13,13 +14,13 @@ export function validatePath(
 export function clear(folderPath: string) {
   fsExtra.readdir(folderPath, (err, files) => {
     if (err) {
-      console.error('Error reading folder:', err);
+      console.error("Error reading folder:", err);
       return;
     }
 
     const svgFiles = files.filter(
       (file) =>
-        extname(file).toLowerCase() === '.svg' && file.startsWith('sprite')
+        extname(file).toLowerCase() === ".svg" && file.startsWith("sprite")
     );
 
     svgFiles.forEach((svgFile) => {
@@ -52,12 +53,12 @@ export async function writeIfChanged({
   let _filepath = filepath;
 
   if (hash) {
-    _filepath = filepath.replace(/\.svg$/, `.${hash}.svg`);
+    _filepath = addHashToSpritePath(filepath, hash);
   }
 
   const currentContent = await fsExtra
-    .readFile(_filepath, 'utf8')
-    .catch(() => '');
+    .readFile(_filepath, "utf8")
+    .catch(() => "");
 
   const shouldSkip = currentContent === newContent && force !== true;
   if (shouldSkip) return false;
@@ -67,6 +68,6 @@ export async function writeIfChanged({
     clear(folder);
   }
 
-  await fsExtra.writeFile(_filepath, newContent, 'utf8');
+  await fsExtra.writeFile(_filepath, newContent, "utf8");
   return true;
 }

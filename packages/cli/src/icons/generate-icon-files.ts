@@ -11,6 +11,7 @@ import { typeTemplate } from "./templates/type";
 import { iconsTemplate } from "./templates/icons";
 import { hashTemplate } from "./templates/hash";
 import { createIconsContext } from "./context";
+import { addHashToSpritePath } from "../utils/hash";
 
 interface GenerateIconFilesOptions {
   files: Array<string>;
@@ -24,13 +25,15 @@ export async function generateIconFiles({
   const {
     spriteFilepath,
     typeOutputFilepath,
+    iconsPath,
+    hashPath,
     inputDir,
     shouldOptimize,
     shouldHash,
     force,
-    outputDir,
   } = context;
 
+  // TODO: spriteFilepath does not include hash. This is a bug.
   const currentSprite = await fsExtra
     .readFile(spriteFilepath, "utf8")
     .catch(() => "");
@@ -49,7 +52,9 @@ export async function generateIconFiles({
 
   if (spriteUpToDate && typesUpToDate) {
     console.log(`Icons are up to date`);
-    return;
+    return {
+      hash: undefined,
+    };
   }
 
   const iconsData = getIconsData(files, inputDir);
@@ -85,7 +90,7 @@ export async function generateIconFiles({
       console.log(
         `Saved to ${path.relative(
           process.cwd(),
-          spriteFilepath.replace(/\.svg$/, `.${hash}.svg`)
+          addHashToSpritePath(spriteFilepath, hash)
         )}`
       );
     } else {
@@ -109,7 +114,7 @@ export async function generateIconFiles({
   }
 
   /** Export icon names */
-  const iconsOutputFilepath = path.join(outputDir, "icons.ts");
+  const iconsOutputFilepath = path.join(iconsPath);
   const iconsOutputContent = iconsTemplate(stringifiedIconNames);
   const iconsChanged = await writeIfChanged({
     filepath: iconsOutputFilepath,
@@ -128,7 +133,7 @@ export async function generateIconFiles({
 
   /** Hash file export */
   if (shouldHash && hash) {
-    const hashOutputFilepath = path.join(outputDir, "hash.ts");
+    const hashOutputFilepath = path.join(hashPath);
     const hashFileContent = hashTemplate(hash);
     const hashFileChanged = await writeIfChanged({
       filepath: hashOutputFilepath,
@@ -149,4 +154,8 @@ export async function generateIconFiles({
   } else {
     console.log(`Icons are up to date`);
   }
+
+  return {
+    hash,
+  };
 }

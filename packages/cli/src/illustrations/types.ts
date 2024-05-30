@@ -105,7 +105,7 @@ export async function generateIllustrationTypes(config: Config) {
     .sort((a, b) => a.localeCompare(b));
 
   if (files.length === 0) {
-    console.log(`No SVG files found in ${inputDirRelative}`);
+    console.log(`No illustration files found in ${inputDirRelative}`);
   } else {
     await generateTypes({
       files,

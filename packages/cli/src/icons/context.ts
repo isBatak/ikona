@@ -6,7 +6,7 @@ export interface CreateIconContextProps {
   spriteOutputDir: string;
 }
 
-export const createIconsContext = (config: Config) => {
+export const createIconsContext = (config: Omit<Config, "illustrations">) => {
   const { outputDir, icons, force, cwd } = config;
 
   const inputDirRelative = path.join(cwd, icons.inputDir);
@@ -16,6 +16,8 @@ export const createIconsContext = (config: Config) => {
   const spriteFilepath = path.join(cwd, icons.spriteOutputDir, "sprite.svg");
   const typesDir = path.join(cwd, outputDir, "types");
   const typeOutputFilepath = path.join(typesDir, "icon-name.d.ts");
+  const iconsPath = path.join(cwd, outputDir, "icons.ts");
+  const hashPath = path.join(cwd, outputDir, "hash.ts");
 
   return {
     inputDir: inputDirRelative,
@@ -24,6 +26,8 @@ export const createIconsContext = (config: Config) => {
     spriteFilepath,
     typesDir,
     typeOutputFilepath,
+    iconsPath,
+    hashPath,
     shouldOptimize: icons.optimize,
     shouldHash: icons.hash,
     force,

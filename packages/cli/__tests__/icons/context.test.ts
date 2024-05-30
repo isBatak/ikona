@@ -12,9 +12,6 @@ describe("context", () => {
         hash: true,
         optimize: true,
       },
-      illustrations: {
-        inputDir: "public/illustrations",
-      },
       cwd: "tmp/",
     });
 
@@ -24,6 +21,8 @@ describe("context", () => {
     expect(result.spriteFilepath).toBe("tmp/public/icons/sprite.svg");
     expect(result.typesDir).toBe("tmp/.ikona/types");
     expect(result.typeOutputFilepath).toBe("tmp/.ikona/types/icon-name.d.ts");
+    expect(result.iconsPath).toBe("tmp/.ikona/icons.ts");
+    expect(result.hashPath).toBe("tmp/.ikona/hash.ts");
     expect(result.shouldOptimize).toBe(true);
     expect(result.shouldHash).toBe(true);
     expect(result.force).toBe(false);

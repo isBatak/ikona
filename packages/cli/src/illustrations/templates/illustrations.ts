@@ -3,6 +3,6 @@ export const illustrationsTemplate = (
 ) => `import { IllustrationPath } from './types/illustration-path';
 
 export const illustrations = [
-\t${illustrationNames.join(",\n\t")},
+    ${illustrationNames.join(",\n    ")},
 ] satisfies Array<IllustrationPath>;
 `;
