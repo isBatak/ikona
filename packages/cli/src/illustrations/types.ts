@@ -1,10 +1,11 @@
-import fsExtra from 'fs-extra';
-import { glob } from 'glob';
-import * as path from 'node:path';
+import fsExtra from "fs-extra";
+import { glob } from "glob";
+import * as path from "node:path";
 
-import { writeIfChanged } from '../utils/validations';
-import type { CliConfig, Config } from '../types';
-import { defaultConfig } from '../utils/config';
+import { writeIfChanged } from "../utils/validations";
+import type { Config } from "../types";
+import { illustrationsTemplate } from "./templates/illustrations";
+import { pathsTemplate } from "./templates/paths";
 
 interface GenerateIconFilesOptions {
   files: Array<string>;
@@ -19,27 +20,25 @@ async function generateTypes({
   outputDir,
   force,
 }: GenerateIconFilesOptions) {
-  const typeOutputFilepath = path.join(typeDir, 'illustration-path.d.ts');
+  const typeOutputFilepath = path.join(typeDir, "illustration-path.d.ts");
   const currentTypes = await fsExtra
-    .readFile(typeOutputFilepath, 'utf8')
-    .catch(() => '');
+    .readFile(typeOutputFilepath, "utf8")
+    .catch(() => "");
 
   const typesUpToDate = files.every((path) =>
     currentTypes.includes(`"${path}"`)
   );
 
   if (typesUpToDate) {
-    console.log('Illustrations are up to date');
+    console.log("Illustrations are up to date");
 
     return;
   }
 
-  const stringifiedIconNames = files.map((path) =>
+  const stringifiedIllustrationNames = files.map((path) =>
     JSON.stringify(`/illustrations/${path}`)
   );
-  const typeOutputContent = `export type IllustrationPath =
-\t| ${stringifiedIconNames.join('\n\t| ').replace(/"/g, "'")};
-`;
+  const typeOutputContent = pathsTemplate(stringifiedIllustrationNames);
   const typesChanged = await writeIfChanged({
     filepath: typeOutputFilepath,
     newContent: typeOutputContent,
@@ -48,7 +47,7 @@ async function generateTypes({
 
   if (typesChanged) {
     for (const file of files) {
-      console.log('✅', file);
+      console.log("✅", file);
     }
 
     console.log(
@@ -57,13 +56,10 @@ async function generateTypes({
   }
 
   /** Export illustration paths */
-  const illustrationsOutputFilepath = path.join(outputDir, 'illustrations.ts');
-  const illustrationsOutputContent = `import { IllustrationPath } from './types/illustration-path';
-
-export const illustrations = [
-\t${stringifiedIconNames.join(',\n\t')},
-] satisfies Array<IllustrationPath>;
-`;
+  const illustrationsOutputFilepath = path.join(outputDir, "illustrations.ts");
+  const illustrationsOutputContent = illustrationsTemplate(
+    stringifiedIllustrationNames
+  );
   const illustrationsChanged = await writeIfChanged({
     filepath: illustrationsOutputFilepath,
     newContent: illustrationsOutputContent,
@@ -86,19 +82,15 @@ export const illustrations = [
   }
 }
 
-export async function generateIllustrationTypes(
-  cliConfig: CliConfig,
-  config: Config
-) {
-  const outputDir =
-    cliConfig['out-dir'] || config.outputDir || defaultConfig.outputDir;
+export async function generateIllustrationTypes(config: Config) {
+  const outputDir = config.outputDir;
   const { inputDir } = config.illustrations;
 
   const cwd = process.cwd();
 
   const inputDirRelative = path.relative(cwd, inputDir);
   const outputDirRelative = path.join(cwd, outputDir);
-  const typeDirRelative = path.join(cwd, outputDir, 'types');
+  const typeDirRelative = path.join(cwd, outputDir, "types");
 
   await Promise.all([
     fsExtra.ensureDir(inputDirRelative),
@@ -107,13 +99,13 @@ export async function generateIllustrationTypes(
   ]);
 
   const files = glob
-    .sync('**/*.{svg,png,jpg,jpeg}', {
+    .sync("**/*.{svg,png,jpg,jpeg}", {
       cwd: inputDir,
     })
     .sort((a, b) => a.localeCompare(b));
 
   if (files.length === 0) {
-    console.log(`No SVG files found in ${inputDirRelative}`);
+    console.log(`No illustration files found in ${inputDirRelative}`);
   } else {
     await generateTypes({
       files,

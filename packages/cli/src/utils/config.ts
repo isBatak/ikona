@@ -1,13 +1,15 @@
-import { bundleNRequire } from 'bundle-n-require';
-import findUp from 'escalade/sync';
-import { resolve } from 'path';
+import { bundleNRequire } from "bundle-n-require";
+import findUp from "escalade/sync";
+import { resolve } from "path";
+import { DefaultConfig } from "../types";
 
-export const defaultConfig = {
-  outputDir: '.ikona',
+export const defaultConfig: DefaultConfig = {
+  outputDir: ".ikona",
+  cwd: process.cwd(),
 };
 
-const configs = ['.ts', '.js', '.mts', '.mjs', '.cts', '.cjs'];
-const configRegex = new RegExp(`ikona.config(${configs.join('|')})$`);
+const configs = [".ts", ".js", ".mts", ".mjs", ".cts", ".cjs"];
+const configRegex = new RegExp(`ikona.config(${configs.join("|")})$`);
 const isConfig = (file: string) => configRegex.test(file);
 
 export function findConfigFile({ cwd, file }: { cwd: string; file?: string }) {
@@ -27,12 +29,12 @@ async function bundle(filepath: string, cwd: string) {
   return { config: config?.default ?? config, dependencies };
 }
 
-export const resolveConfigFile = async () => {
+export const resolveFileConfig = async () => {
   const currentDir = process.cwd();
   const filePath = findConfigFile({ cwd: currentDir });
 
   if (!filePath) {
-    throw new Error('Config file not found');
+    throw new Error("Config file not found");
   }
 
   const { config } = await bundle(filePath, currentDir);

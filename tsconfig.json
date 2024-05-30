@@ -14,7 +14,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "verbatimModuleSyntax": true,
+    "verbatimModuleSyntax": false,
     "moduleResolution": "Bundler",
     "module": "ESNext",
     "customConditions": ["source"],

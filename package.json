@@ -18,6 +18,9 @@
     "dev": "pnpm --parallel --filter=./packages/** dev",
     "build-fast": "pnpm -r --parallel --filter=./packages/** build-fast",
     "build": "pnpm -r --filter=./packages/** build",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "prettier": "prettier --check packages",
     "prettier-fix": "prettier --write packages",
     "typecheck": "tsc --noEmit",
@@ -25,21 +28,27 @@
     "changeset:release": "changeset publish"
   },
   "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@types/jest": "^29.5.12",
     "@types/node": "^20.9.0",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",
     "eslint": "^8.57.0",
     "husky": "^8.0.3",
+    "jest": "^29.7.0",
     "lint-staged": "^15.1.0",
     "pkg": "^5.8.1",
     "prettier": "3.2.5",
+    "prettier-2": "npm:prettier@^2",
     "rimraf": "^5.0.5",
+    "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
     "tsup": "^8.0.2",
-    "typescript": "^5.2.2"
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "@changesets/changelog-github": "^0.5.0",
     "@changesets/cli": "^2.27.1"
-  }
+  },
+  "type": "module"
 }

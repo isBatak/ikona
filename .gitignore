@@ -20,3 +20,5 @@ exec/
 # Miscellaneous
 .DS_Store
 Thumbs.db
+
+coverage/
