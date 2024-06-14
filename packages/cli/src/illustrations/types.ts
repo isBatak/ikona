@@ -6,6 +6,7 @@ import { writeIfChanged } from "../utils/validations";
 import type { Config } from "../types";
 import { illustrationsTemplate } from "./templates/illustrations";
 import { pathsTemplate } from "./templates/paths";
+import { getIllustrationsExtensionsGlobPattern } from "../utils/glob";
 
 interface GenerateIconFilesOptions {
   files: Array<string>;
@@ -99,9 +100,12 @@ export async function generateIllustrationTypes(config: Config) {
   ]);
 
   const files = glob
-    .sync("**/*.{svg,png,jpg,jpeg}", {
-      cwd: inputDir,
-    })
+    .sync(
+      getIllustrationsExtensionsGlobPattern(config.illustrations.extensions),
+      {
+        cwd: inputDir,
+      }
+    )
     .sort((a, b) => a.localeCompare(b));
 
   if (files.length === 0) {

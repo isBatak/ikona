@@ -2,8 +2,14 @@ export type Prettify<T> = {
   [K in keyof T]: T[K];
 } & unknown;
 
+type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends Record<string, unknown>
+    ? DeepPartial<T[P]>
+    : T[P];
+};
+
 export interface Config {
-  verbose?: boolean;
+  verbose: boolean;
 
   /**
    * Directory where the generated files
@@ -14,31 +20,28 @@ export interface Config {
   /**
    * Force generation of files
    */
-  force?: boolean;
+  force: boolean;
 
   icons: {
-    optimize?: boolean;
+    optimize: boolean;
     inputDir: string;
     spriteOutputDir: string;
 
     /**
      * Hash sprite file name and export it as a JS constant.
      */
-    hash?: boolean;
+    hash: boolean;
   };
 
   illustrations: {
     inputDir: string;
+    extensions: string[];
   };
 
   cwd: string;
 }
 
-export type DefaultConfig = Required<Pick<Config, "outputDir" | "cwd">>;
-
-export type FileConfig = Prettify<
-  Omit<Config, "outputDir" | "cwd"> & Partial<Pick<Config, "outputDir" | "cwd">>
->;
+export type FileConfig = Prettify<DeepPartial<Config>>;
 
 export interface CliConfig {
   verbose?: boolean;

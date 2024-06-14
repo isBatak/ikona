@@ -18,6 +18,7 @@ describe("types", () => {
         "book.png": "png",
         "song.jpg": "jpg",
         "song.jpeg": "jpeg",
+        "song.webp": "webp",
       },
     });
 
@@ -35,6 +36,7 @@ describe("types", () => {
           "/illustrations/email.svg",
           "/illustrations/song.jpeg",
           "/illustrations/song.jpg",
+          "/illustrations/song.webp",
       ] satisfies Array<IllustrationPath>;
       "
     `);
@@ -49,7 +51,8 @@ describe("types", () => {
         | '/illustrations/book.png'
         | '/illustrations/email.svg'
         | '/illustrations/song.jpeg'
-        | '/illustrations/song.jpg';
+        | '/illustrations/song.jpg'
+        | '/illustrations/song.webp';
       "
     `);
   });

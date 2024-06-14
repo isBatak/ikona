@@ -1,6 +1,7 @@
 import { Config } from "../../src";
 
 export const configFixture: Config = {
+  verbose: false,
   outputDir: "output",
   icons: {
     inputDir: "icons",
@@ -10,6 +11,7 @@ export const configFixture: Config = {
   },
   illustrations: {
     inputDir: "illustrations",
+    extensions: ["svg", "png", "jpg", "jpeg", "webp"],
   },
   force: false,
   cwd: "",
