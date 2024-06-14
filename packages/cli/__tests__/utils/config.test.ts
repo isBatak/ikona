@@ -16,8 +16,20 @@ jest.mock("path", () => ({
 describe("defaultConfig", () => {
   it("should have the correct default values", () => {
     expect(defaultConfig).toEqual({
-      outputDir: ".ikona",
       cwd: process.cwd(),
+      force: false,
+      icons: {
+        hash: false,
+        inputDir: "icons",
+        optimize: false,
+        spriteOutputDir: "output",
+      },
+      illustrations: {
+        extensions: ["svg", "png", "jpg", "jpeg", "webp"],
+        inputDir: "illustrations",
+      },
+      outputDir: ".ikona",
+      verbose: false,
     });
   });
 });

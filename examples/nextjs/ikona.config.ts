@@ -10,5 +10,6 @@ export default defineConfig({
   },
   illustrations: {
     inputDir: "public/illustrations",
+    extensions: ["svg", "png", "jpg", "jpeg", "webp"],
   },
 });

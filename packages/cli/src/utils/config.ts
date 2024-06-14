@@ -1,10 +1,22 @@
 import { bundleNRequire } from "bundle-n-require";
 import findUp from "escalade/sync";
 import { resolve } from "path";
-import { DefaultConfig } from "../types";
+import { Config } from "../types";
 
-export const defaultConfig: DefaultConfig = {
+export const defaultConfig: Config = {
+  verbose: false,
   outputDir: ".ikona",
+  force: false,
+  icons: {
+    optimize: false,
+    inputDir: "icons",
+    spriteOutputDir: "output",
+    hash: false,
+  },
+  illustrations: {
+    inputDir: "illustrations",
+    extensions: ["svg", "png", "jpg", "jpeg", "webp"],
+  },
   cwd: process.cwd(),
 };
 
