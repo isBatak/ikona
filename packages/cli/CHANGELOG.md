@@ -1,5 +1,11 @@
 # @ikona/cli
 
+## 0.1.9
+
+### Patch Changes
+
+- e2caee1: fix storybook issue with `image-size` lib
+
 ## 0.1.8
 
 ### Patch Changes
