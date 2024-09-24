@@ -1,5 +1,11 @@
 # @ikona/cli
 
+## 0.1.10
+
+### Patch Changes
+
+- fix last version build artifacts
+
 ## 0.1.9
 
 ### Patch Changes
