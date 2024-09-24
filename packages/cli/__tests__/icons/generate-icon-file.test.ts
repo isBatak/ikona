@@ -70,7 +70,9 @@ describe("generateIconFiles", () => {
 
     const hashContent = fs.readFileSync(context.hashPath, "utf-8");
     expect(hashContent).toMatchInlineSnapshot(`
-      "export const hash = '`);
+      "export const hash = 'e50b086ece17b1aef95e165676c128d0';
+      "
+    `);
   });
 
   it("should generate and optimize sprite", async () => {
