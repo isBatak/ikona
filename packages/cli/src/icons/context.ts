@@ -31,5 +31,6 @@ export const createIconsContext = (config: Omit<Config, "illustrations">) => {
     shouldOptimize: icons.optimize,
     shouldHash: icons.hash,
     force,
+    svgoConfig: icons.svgoConfig,
   };
 };

@@ -57,13 +57,19 @@ export async function generateIconFiles({
     };
   }
 
-  const iconsData = getIconsData(files, inputDir);
-
-  let output = svgSpriteTemplate(iconsData);
+  const iconsData = getIconsData({
+    files,
+    inputDir,
+  });
 
   if (shouldOptimize) {
-    output = optimize(output);
+    for (const icon of iconsData) {
+      console.log(icon.content);
+      icon.content = optimize(icon.content, context.svgoConfig);
+    }
   }
+
+  const output = svgSpriteTemplate(iconsData);
 
   let hash;
   if (shouldHash) {

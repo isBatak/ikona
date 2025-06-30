@@ -16,7 +16,7 @@ describe("get-icons-data", () => {
       [`${inputDir}/${fileName}`]: heartIcon,
     });
 
-    const result = getIconsData(files, inputDir);
+    const result = getIconsData({ files, inputDir });
 
     expect(result).toMatchInlineSnapshot(`
       [

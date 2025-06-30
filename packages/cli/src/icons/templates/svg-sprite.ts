@@ -21,6 +21,7 @@ export function svgSpriteTemplate(iconsData: Array<IconData>) {
     svg.removeAttribute("version");
     svg.removeAttribute("width");
     svg.removeAttribute("height");
+    svg.removeAttribute("fill");
 
     return svg.toString().trim();
   });

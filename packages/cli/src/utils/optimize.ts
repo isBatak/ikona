@@ -1,6 +1,7 @@
 import { optimize as svgOptimize, type Config } from "svgo";
 
 export const defaultSVGOConfig: Config = {
+  multipass: true,
   plugins: [
     {
       name: "preset-default",
@@ -13,6 +14,10 @@ export const defaultSVGOConfig: Config = {
       },
     },
   ],
+  js2svg: {
+    indent: 2,
+    pretty: true,
+  },
 };
 
 export function optimize(output: string, options: Config = defaultSVGOConfig) {

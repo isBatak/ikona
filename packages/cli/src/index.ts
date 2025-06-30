@@ -1,10 +1,10 @@
 import { generateSprite } from "./icons";
 import { generateIllustrationTypes } from "./illustrations/types";
-import type { CliConfig, FileConfig, Config } from "./types";
+import type { CliConfig, FileConfig, Config, SVGOConfig } from "./types";
 import { resolveFileConfig } from "./utils/config";
 import { mergeConfigs } from "./utils/merge-config";
 
-export type { CliConfig, FileConfig, Config };
+export type { CliConfig, FileConfig, Config, SVGOConfig };
 
 export function defineConfig(config: FileConfig) {
   return config;
