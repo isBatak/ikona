@@ -7,10 +7,15 @@ export interface IconData {
   content: string;
 }
 
-export function getIconsData(
-  files: Array<string>,
-  inputDir: string
-): Array<IconData> {
+export interface GetIconsDataOptions {
+  files: Array<string>;
+  inputDir: string;
+}
+
+export function getIconsData({
+  files,
+  inputDir,
+}: GetIconsDataOptions): Array<IconData> {
   return files.map((file) => {
     const name = iconName(file);
     const content = fs.readFileSync(path.join(inputDir, file), "utf8");

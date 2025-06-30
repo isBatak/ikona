@@ -1,3 +1,7 @@
+import { type Config as SVGOConfig } from "svgo";
+
+export type { Config as SVGOConfig } from "svgo";
+
 export type Prettify<T> = {
   [K in keyof T]: T[K];
 } & unknown;
@@ -31,6 +35,8 @@ export interface Config {
      * Hash sprite file name and export it as a JS constant.
      */
     hash: boolean;
+
+    svgoConfig?: SVGOConfig;
   };
 
   illustrations: {
