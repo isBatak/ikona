@@ -10,6 +10,9 @@ export const defaultSVGOConfig: Config = {
           removeHiddenElems: false,
           removeUselessDefs: false,
           cleanupIds: false,
+          convertColors: {
+            currentColor: true,
+          },
         },
       },
     },

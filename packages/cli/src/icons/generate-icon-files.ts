@@ -64,7 +64,6 @@ export async function generateIconFiles({
 
   if (shouldOptimize) {
     for (const icon of iconsData) {
-      console.log(icon.content);
       icon.content = optimize(icon.content, context.svgoConfig);
     }
   }
