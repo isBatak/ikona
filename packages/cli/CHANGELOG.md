@@ -1,5 +1,11 @@
 # @ikona/cli
 
+## 0.2.1
+
+### Patch Changes
+
+- 150f28d: set removeViewBox to false to keep viewBox in optimized svg output
+
 ## 0.2.0
 
 ### Minor Changes
