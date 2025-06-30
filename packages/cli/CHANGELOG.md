@@ -1,5 +1,13 @@
 # @ikona/cli
 
+## 0.2.0
+
+### Minor Changes
+
+- a2351e7: - optimize each svg separately
+  - expose svgo config in the ikona.config.js file
+- 8347fb7: replace fill and stroke values with currentColor when optimizing
+
 ## 0.1.10
 
 ### Patch Changes
