@@ -13,6 +13,7 @@ export const defaultSVGOConfig: Config = {
           convertColors: {
             currentColor: true,
           },
+          removeViewBox: false,
         },
       },
     },
