@@ -2,4 +2,4 @@
 "@ikona/cli": minor
 ---
 
-replace fill and stroke values with currentColor when optimizing
+- replace fill and stroke values with currentColor when optimizing
