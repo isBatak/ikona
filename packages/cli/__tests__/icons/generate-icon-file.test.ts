@@ -69,8 +69,8 @@ describe("generateIconFiles", () => {
     `);
 
     const hashContent = fs.readFileSync(context.hashPath, "utf-8");
-    expect(hashContent).toMatchInlineSnapshot(`
-      "export const hash = '`);
+
+    expect(hashContent).toBe(`export const hash = '${hash}';\n`);
   });
 
   it("should generate and optimize sprite", async () => {
