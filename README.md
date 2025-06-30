@@ -28,18 +28,37 @@ Ikona distinguishes two types of SVGs: icons and illustrations. Icons are small 
 Create a file named `ikona.config.ts` in the root of your project. This file will contain the configuration for Ikona.
 
 ```js
-import { defineConfig } from '@ikona/cli';
+import { defineConfig } from "@ikona/cli";
 
 export default defineConfig({
   verbose: false,
   icons: {
-    optimize: false,
-    inputDir: 'src/assets/icons',
-    spriteOutputDir: 'public/icons',
+    inputDir: "src/assets/icons",
+    spriteOutputDir: "public/icons",
     hash: true,
+    optimize: true,
+    svgoConfig: {
+      multipass: true,
+      plugins: [
+        {
+          name: "preset-default",
+          params: {
+            overrides: {
+              removeHiddenElems: false,
+              removeUselessDefs: false,
+              cleanupIds: false,
+            },
+          },
+        },
+      ],
+      js2svg: {
+        indent: 2,
+        pretty: true,
+      },
+    },
   },
   illustrations: {
-    inputDir: 'public/illustrations',
+    inputDir: "public/illustrations",
   },
 });
 ```
@@ -55,10 +74,10 @@ To generate SVG sprites, run the following command:
 To use icons, import the generated code to create a React component.
 
 ```tsx
-import React from 'react';
+import React from "react";
 
-import { IconName } from '.ikona/types/icon-name';
-import { hash } from '.ikona/hash';
+import { IconName } from ".ikona/types/icon-name";
+import { hash } from ".ikona/hash";
 
 export const Icon = ({ name }: { name: IconName }) => {
   return (
@@ -74,7 +93,7 @@ export const Icon = ({ name }: { name: IconName }) => {
 To preload SVG sprites, include this snippet in your HTML `head`.
 
 ```jsx
-import { hash } from '.ikona/hash';
+import { hash } from ".ikona/hash";
 
 <link
   rel="preload"
@@ -91,9 +110,9 @@ import { hash } from '.ikona/hash';
 To use illustrations, import the generated code to create a React component.
 
 ```tsx
-import React from 'react';
+import React from "react";
 
-import { IllustrationPath } from '.ikona/types/illustration-path';
+import { IllustrationPath } from ".ikona/types/illustration-path";
 
 export const Illustration = ({ path }: { path: IllustrationPath }) => {
   return <img src={path} />;
