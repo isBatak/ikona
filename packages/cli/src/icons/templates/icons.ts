@@ -1,8 +1,8 @@
 export const iconsTemplate = (
   iconNames: string[]
-) => `import { IconName } from './types/icon-name';
+) => `import type { IconName } from './types/icon-name';
 
     export const icons = [
-      ${iconNames.join(",\n      ")},
+      ${iconNames.join(',\n      ')},
     ] satisfies Array<IconName>;
   `;

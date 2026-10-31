@@ -1,26 +1,26 @@
-import { mockFs } from "../mock-fs";
-import { generateIconFiles } from "../../src/icons/generate-icon-files";
-import { createIconsContext } from "../../src/icons/context";
-import fs from "fs";
-import { addHashToSpritePath } from "../../src/utils/hash";
-import { heartIcon } from "../fixtures/icons";
-import { configFixture } from "../fixtures/config";
+import { mockFs } from '../mock-fs';
+import { generateIconFiles } from '../../src/icons/generate-icon-files';
+import { createIconsContext } from '../../src/icons/context';
+import fs from 'fs';
+import { addHashToSpritePath } from '../../src/utils/hash';
+import { heartIcon } from '../fixtures/icons';
+import { configFixture } from '../fixtures/config';
 
-describe("generateIconFiles", () => {
-  const files = ["icon1.svg", "icon2.svg"];
+describe('generateIconFiles', () => {
+  const files = ['icon1.svg', 'icon2.svg'];
   const root = {
     output: {
       types: {},
     },
-    "icons/icon1.svg": heartIcon,
-    "icons/icon2.svg": heartIcon,
+    'icons/icon1.svg': heartIcon,
+    'icons/icon2.svg': heartIcon,
   };
 
   afterEach(() => {
     mockFs.restore();
   });
 
-  it("should generate icon files and write changes to the file system", async () => {
+  it('should generate icon files and write changes to the file system', async () => {
     const context = createIconsContext({
       ...configFixture,
       icons: {
@@ -37,7 +37,7 @@ describe("generateIconFiles", () => {
       ? addHashToSpritePath(context.spriteFilepath, hash)
       : context.spriteFilepath;
 
-    const spriteContent = fs.readFileSync(spritePath, "utf-8");
+    const spriteContent = fs.readFileSync(spritePath, 'utf-8');
     expect(spriteContent).toMatchInlineSnapshot(`
       "<?xml version="1.0" encoding="UTF-8"?>
       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 0 0" width="0" height="0">
@@ -49,7 +49,7 @@ describe("generateIconFiles", () => {
       "
     `);
 
-    const typesContent = fs.readFileSync(context.typeOutputFilepath, "utf-8");
+    const typesContent = fs.readFileSync(context.typeOutputFilepath, 'utf-8');
     expect(typesContent).toMatchInlineSnapshot(`
       "export type IconName =
         | 'icon1'
@@ -57,9 +57,9 @@ describe("generateIconFiles", () => {
       "
     `);
 
-    const iconsContent = fs.readFileSync(context.iconsPath, "utf-8");
+    const iconsContent = fs.readFileSync(context.iconsPath, 'utf-8');
     expect(iconsContent).toMatchInlineSnapshot(`
-      "import { IconName } from './types/icon-name';
+      "import type { IconName } from './types/icon-name';
 
           export const icons = [
             "icon1",
@@ -68,12 +68,12 @@ describe("generateIconFiles", () => {
         "
     `);
 
-    const hashContent = fs.readFileSync(context.hashPath, "utf-8");
+    const hashContent = fs.readFileSync(context.hashPath, 'utf-8');
 
     expect(hashContent).toBe(`export const hash = '${hash}';\n`);
   });
 
-  it("should generate and optimize sprite", async () => {
+  it('should generate and optimize sprite', async () => {
     const context = createIconsContext({
       ...configFixture,
       icons: {
@@ -90,7 +90,7 @@ describe("generateIconFiles", () => {
       ? addHashToSpritePath(context.spriteFilepath, hash)
       : context.spriteFilepath;
 
-    const spriteContent = fs.readFileSync(spritePath, "utf-8");
+    const spriteContent = fs.readFileSync(spritePath, 'utf-8');
     expect(spriteContent).toMatchInlineSnapshot(`
       "<?xml version="1.0" encoding="UTF-8"?>
       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 0 0" width="0" height="0">

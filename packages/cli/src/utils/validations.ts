@@ -1,6 +1,6 @@
-import fsExtra from "fs-extra";
-import { join, extname } from "node:path";
-import { addHashToSpritePath } from "./hash";
+import fsExtra from 'fs-extra';
+import { join, extname } from 'node:path';
+import { addHashToSpritePath } from './hash';
 
 export function validatePath(
   path: string | undefined,
@@ -11,30 +11,32 @@ export function validatePath(
   }
 }
 
-export function clear(folderPath: string) {
-  fsExtra.readdir(folderPath, (err, files) => {
-    if (err) {
-      console.error("Error reading folder:", err);
-      return;
-    }
+export async function clear(folderPath: string) {
+  let files: string[];
+  try {
+    files = await fsExtra.readdir(folderPath);
+  } catch (err) {
+    console.error('Error reading folder:', err);
+    return;
+  }
 
-    const svgFiles = files.filter(
-      (file) =>
-        extname(file).toLowerCase() === ".svg" && file.startsWith("sprite")
-    );
+  const svgFiles = files.filter(
+    (file) =>
+      extname(file).toLowerCase() === '.svg' && file.startsWith('sprite')
+  );
 
-    svgFiles.forEach((svgFile) => {
+  await Promise.all(
+    svgFiles.map(async (svgFile) => {
       const filePath = join(folderPath, svgFile);
 
-      fsExtra.unlink(filePath, (err) => {
-        if (err) {
-          console.error(`Error removing file ${filePath}:`, err);
-        } else {
-          console.log(`Removed file: ${filePath}`);
-        }
-      });
-    });
-  });
+      try {
+        await fsExtra.unlink(filePath);
+        console.log(`Removed file: ${filePath}`);
+      } catch (err) {
+        console.error(`Error removing file ${filePath}:`, err);
+      }
+    })
+  );
 }
 
 interface WriteIfChangedOptions {
@@ -57,17 +59,17 @@ export async function writeIfChanged({
   }
 
   const currentContent = await fsExtra
-    .readFile(_filepath, "utf8")
-    .catch(() => "");
+    .readFile(_filepath, 'utf8')
+    .catch(() => '');
 
   const shouldSkip = currentContent === newContent && force !== true;
   if (shouldSkip) return false;
 
   if (hash) {
     const folder = filepath.replace(/sprite\.svg$/, ``);
-    clear(folder);
+    await clear(folder);
   }
 
-  await fsExtra.writeFile(_filepath, newContent, "utf8");
+  await fsExtra.writeFile(_filepath, newContent, 'utf8');
   return true;
 }
