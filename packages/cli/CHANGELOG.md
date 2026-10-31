@@ -1,5 +1,11 @@
 # @ikona/cli
 
+## 0.2.3
+
+### Patch Changes
+
+- Update dependencies, including `svgo` 3.3.5, `glob` 10.5.0 and `fs-extra` 11.4.1.
+
 ## 0.2.2
 
 ### Patch Changes
