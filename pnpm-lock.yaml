@@ -49,8 +49,8 @@ importers:
         specifier: 3.9.10
         version: 3.9.10
       prettier-2:
-        specifier: npm:prettier@^2
-        version: /prettier@2.8.8
+        specifier: npm:prettier@^3.0.0
+        version: /prettier@3.9.10
       rimraf:
         specifier: ^5.0.5
         version: 5.0.10
@@ -8825,6 +8825,7 @@ packages:
     resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
     engines: {node: '>=10.13.0'}
     hasBin: true
+    dev: false
 
   /prettier@3.9.10:
     resolution: {integrity: sha512-skGHTH1Yb9QvaTC4hWnRTzEYtCpApF0UMBPz+t/0ZPzP8ihefo/btKd+QA7pUE0fEwA1SbS/NmhyEcstdXOIdA==}
