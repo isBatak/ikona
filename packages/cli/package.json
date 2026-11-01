@@ -67,7 +67,7 @@
     "rimraf": "^5.0.5",
     "ts-node": "^10.9.1",
     "tsup": "^8.0.0",
-    "typescript": "^5.2.2"
+    "typescript": "^7.0.0"
   },
   "dependencies": {
     "@types/fs-extra": "^11.0.4",
